@@ -47,3 +47,12 @@ classifiers = [
 #TODO: Add readthedocs link for `Documentation`
 Repository = "https://github.com/TT2024-B106/stmeasures.git"
 Issues = "https://github.com/TT2024-B106/stmeasures/issues"
+
+[tool.hatch.version]
+source = "versioningit"
+default-version = "0.0.0+unknown"
+
+[tool.hatch.version.format]
+distance = "{next_version}.dev{distance}+{vcs}{rev}"
+dirty = "{version}+dirty"
+distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.dirty"
