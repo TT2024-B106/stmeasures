@@ -61,7 +61,7 @@ default-version = "0.0.0a"
 format = "{base_version}+{distance}.g{rev}"
 
 [tool.versioningit.tag2version]
-pattern = "v(?P<base_version>.*)"
+pattern = "(?P<base_version>.*)"
 
 [tool.versioningit.versioning]
 scheme = "guess-next-dev"
