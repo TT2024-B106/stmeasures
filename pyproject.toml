@@ -49,9 +49,6 @@ source = "versioningit"
 default-version = "0.0.0a"
 
 [tool.hatch.version.format]
-distance = "{next_version}dev{distance}{vcs}{rev}"
-dirty = "{version}dirty"
-distance-dirty = "{next_version}dev{distance}{vcs}{rev}dirty"
-
-[tool.hatch.build]
-artifacts = ["dist/_version.py"]
+distance = "{next_version}.dev{distance}+{vcs}{rev}"
+dirty = "{version}+dirty"
+distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.dirty"
