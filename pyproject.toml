@@ -55,16 +55,3 @@ default-version = "0.0.0a"
 distance = "{next_version}.dev{distance}+{vcs}{rev}"
 dirty = "{version}+dirty"
 distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.dirty"
-
-[tool.versioningit]
-default-version = "0.0.0a"
-format = "{base_version}+{distance}.g{rev}"
-
-[tool.versioningit.tag2version]
-pattern = "(?P<base_version>.*)"
-
-[tool.versioningit.versioning]
-scheme = "guess-next-dev"
-
-[tool.versioningit.commit]
-sha_length = 7
