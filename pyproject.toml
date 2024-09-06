@@ -44,16 +44,14 @@ classifiers = [
 Repository = "https://github.com/TT2024-B106/stmeasures.git"
 Issues = "https://github.com/TT2024-B106/stmeasures/issues"
 
-[tool.hatch.build]
-artifacts = ["stmeasures/_version.py"]
-
 [tool.hatch.version]
 source = "versioningit"
-
-[tool.versioningit]
 default-version = "0.0.0a"
 
-[tool.versioningit.format]
+[tool.hatch.version.format]
 distance = "{next_version}dev{distance}{vcs}{rev}"
 dirty = "{version}dirty"
 distance-dirty = "{next_version}dev{distance}{vcs}{rev}dirty"
+
+[tool.hatch.build]
+artifacts = ["dist/_version.py"]
