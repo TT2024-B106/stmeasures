@@ -51,7 +51,7 @@ Issues = "https://github.com/TT2024-B106/stmeasures/issues"
 source = "versioningit"
 default-version = "0.0.0a"
 
-[tool.hatch.version.format]
-distance = "{next_version}.dev{distance}+{vcs}{rev}"
-dirty = "{version}+dirty"
-distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.dirty"
+[tool.versioningit.format]
+distance = "{base_version}dev{distance}{vcs}{rev}"
+dirty = "{base_version}d{build_date:%Y%m%d}"
+distance-dirty = "{base_version}dev{distance}{vcs}{rev}d{build_date:%Y%m%d}"
