@@ -44,6 +44,9 @@ classifiers = [
 Repository = "https://github.com/TT2024-B106/stmeasures.git"
 Issues = "https://github.com/TT2024-B106/stmeasures/issues"
 
+[tool.hatch.build]
+artifacts = ["stmeasures/_version.py"]
+
 [tool.hatch.version]
 source = "versioningit"
 
