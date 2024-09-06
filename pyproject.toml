@@ -52,3 +52,8 @@ default-version = "0.0.0a"
 distance = "{next_version}.dev{distance}+{vcs}{rev}"
 dirty = "{version}+dirty"
 distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.dirty"
+
+[tool.versioningit.vcs]
+method = "git"
+match = ["v*"]
+default-tag = "0.0.0"
