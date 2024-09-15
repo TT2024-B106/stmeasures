@@ -1,13 +1,8 @@
-#include "distance.h"
-#include <math.h>
+#ifndef DISTANCE_H
+#define DISTANCE_H
 
-double distance(const double *p, const double *q, size_t size) {
-    double sum_of_squares = 0.0;
+#include <stddef.h>
 
-    for (size_t i = 0; i < size; ++i) {
-        double diff = p[i] - q[i];
-        sum_of_squares += diff * diff;
-    }
+double distance(const double *p, const double *q, size_t size);
 
-    return sqrt(sum_of_squares);
-}
+#endif
