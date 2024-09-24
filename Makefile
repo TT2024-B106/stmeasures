@@ -1,4 +1,4 @@
-CC = g++
+CC = gcc
 
 CFLAGS = -fPIC -Wall
 LDFLAGS = -shared
