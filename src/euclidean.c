@@ -1,4 +1,4 @@
-#include "distance.h"
+#include "euclidean.h"
 #include <math.h>
 
 double distance(const double *p, const double *q, size_t size) {
