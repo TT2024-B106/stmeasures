@@ -5,8 +5,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint:
-    name: Lint Python and C source files
+  lint-build-test:
+    name: Lint, build and test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -21,10 +21,10 @@ jobs:
         pip install -e .
         pip install ruff pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with Ruff
+    - name: Python Linter (ruff)
       run: |
         ruff check
-    - name: C Linter
+    - name: C Linter (clang)
       uses: cpp-linter/cpp-linter-action@v2.13.1
       id: linter
       env:
@@ -33,3 +33,9 @@ jobs:
         style: 'file'
         tidy-checks: ''
         thread-comments: ${{ github.event_name == 'pull_request' && 'update' }}
+    - name: Build C shared library
+      run: |
+        make
+    - name: Running tests
+      run: |
+        pytest
