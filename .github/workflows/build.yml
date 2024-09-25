@@ -28,7 +28,7 @@ jobs:
       uses: cpp-linter/cpp-linter-action@v2.13.1
       id: linter
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.CLINT_TOKEN }}
       with:
         style: 'file'
         tidy-checks: ''
