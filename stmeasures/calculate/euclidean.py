@@ -1,9 +1,8 @@
 import os
 import ctypes
 
-_current_dir = os.path.dirname(os.path.abspath(__file__))
 _libfilename = "libeuclidean.so"
-_libpath = os.path.join(_current_dir, f"../../{_libfilename}")
+_libpath = os.path.join(os.path.dirname(__file__), _libfilename)
 _lib = ctypes.CDLL(_libpath)
 
 def distance(p: list[float], q: list[float]) -> float:
