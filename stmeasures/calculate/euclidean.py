@@ -1,8 +1,11 @@
 import os
 import ctypes
 
+from stmeasures import _pkgpath
+
 _libfilename = "libeuclidean.so"
-_libpath = os.path.join(os.path.dirname(__file__), _libfilename)
+_libname = "stmeasures-clib"
+_libpath = os.path.join(_pkgpath, f"../{_libname}/{_libfilename}")
 _lib = ctypes.CDLL(_libpath)
 
 def distance(p: list[float], q: list[float]) -> float:
