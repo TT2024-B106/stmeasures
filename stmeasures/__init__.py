@@ -1,5 +1,8 @@
-""" Similar Trajectories Measurements """
+"""Similar Trajectories Measurements."""
 
-import pathlib
+import os
 
-_pkgpath = pathlib.Path(__file__).parent.resolve()
+def _libpath(libname: str):
+    clibpath = f"../stmeasures-clib/{libname}.so"
+    pkgpath = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(pkgpath, clibpath)
