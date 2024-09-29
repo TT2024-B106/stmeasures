@@ -11,4 +11,4 @@ libeuclidean.so:
 clean:
 	rm -f *.so
 	[ -e "dist" ] && rm -r dist || :
-	[ -e "clib" ] && rm -r clib || :
+	[ -e "stmeasures-clib" ] && rm -r clib || :

@@ -45,10 +45,10 @@ Repository = "https://github.com/TT2024-B106/stmeasures.git"
 Issues = "https://github.com/TT2024-B106/stmeasures/issues"
 
 [tool.hatch.build.targets.wheel.force-include]
-"./clib" = "clib"
+"./stmeasures-clib" = "stmeasures-clib"
 
 [[tool.hatch.build.hooks.build-scripts.scripts]]
-out_dir = "clib"
+out_dir = "stmeasures-clib"
 commands = [
     "make",
 ]
