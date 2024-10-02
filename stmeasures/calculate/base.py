@@ -30,7 +30,7 @@ class BaseAlgorithm():
     @property
     def lib(self) -> ctypes.CDLL:
         """Return loaded shared library."""
-        if hasattr(self, '_lib') and type(self._lib) == ctypes.CDLL:
+        if hasattr(self, '_lib') and isinstance(self._lib, ctypes.CDLL):
             return self._lib
         else:
             raise RuntimeError(
