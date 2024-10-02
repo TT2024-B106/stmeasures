@@ -11,7 +11,7 @@ class BaseAlgorithm():
 
     @property
     def lib(self) -> ctypes.CDLL:
-        if hasattr(self, '_lib') and self._lib:
+        if hasattr(self, '_lib') and type(self._lib) == ctypes.CDLL:
             return self._lib
         else:
             raise RuntimeError(
