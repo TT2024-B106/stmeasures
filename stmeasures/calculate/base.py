@@ -1,8 +1,26 @@
+"""Base algorithm class and utilities."""
+
 import ctypes
 
 from stmeasures import _libpath
 
 class BaseAlgorithm():
+    """Base class for distance calculation algorithms.
+
+    Provides a simple way to load shared libraries (`.so` files) implemented
+    and built in C.
+
+    Parameters
+    ----------
+    libname : str
+        The library name (i.e.: the file name without the file extension).
+
+    Attributes
+    ----------
+    lib : ctypes.CDLL
+        A loaded shared library that implements the algorithm in C.
+    """
+
     def __init__(self, libname: str) -> None:
         self._libpath = _libpath(libname)
         self._lib = None
@@ -11,6 +29,7 @@ class BaseAlgorithm():
 
     @property
     def lib(self) -> ctypes.CDLL:
+        """Return loaded shared library."""
         if hasattr(self, '_lib') and type(self._lib) == ctypes.CDLL:
             return self._lib
         else:
@@ -19,6 +38,7 @@ class BaseAlgorithm():
             )
 
     def _load_library(self) -> None:
+        """Load shared library."""
         try:
             self._lib = ctypes.CDLL(self._libpath)
         except OSError as ose:
