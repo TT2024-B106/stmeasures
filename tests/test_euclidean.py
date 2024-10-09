@@ -1,13 +1,13 @@
 import pytest
+
 from stmeasures.calculate.euclidean import Euclidean
 
 @pytest.fixture(scope="module")
 def euclidean():
-    instance = Euclidean()
+    return Euclidean()
 
-    assert instance.lib is not None
-
-    return instance
+def test_lib(euclidean):
+    assert euclidean.lib is not None
 
 def test_basic(euclidean):
     approx_val = 2.8284271247461903
