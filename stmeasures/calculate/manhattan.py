@@ -18,8 +18,8 @@ class Manhattan(BaseAlgorithm):
     Calculating the manhattan distance of Point 1 (1, 2) and Point 2 (3, 4)
 
     >>> manhattan = Manhattan() # Intializes object and loads shared library
-    >>> manhattan.distance([1, 2], [3, 4])
-    2.0
+    >>> manhattan.distance([1, 2], [3, 4]) # |1 - 3| + |2 - 4| = 4
+    4.0
     """
 
     def __init__(self, libname="libmanhattan") -> None:
@@ -35,9 +35,9 @@ class Manhattan(BaseAlgorithm):
         Parameters
         ----------
         p : list[float]
-            A first vector in Euclidean n-space
+            A first vector in n-space
         q : list[float]
-            A second vector in Euclidean n-space
+            A second vector in n-space
         """
         len_p = len(p)
 
