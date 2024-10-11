@@ -21,8 +21,9 @@ all: libhausdorff.so
 #	$(CC) $(LDFLAGS) manhattan.pic.o math_utils.pic.o editdist.pic.o -o $@
 
 libhausdorff.so:
-	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
-	$(CC) $(LDFLAGS) manhattan.pic.o math_utils.pic.o editdist.pic.o -o $@
+	#$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/hausdorff.c
+	#$(CC) $(LDFLAGS) manhattan.pic.o math_utils.pic.o editdist.pic.o -o $@
 
 
 clean:
