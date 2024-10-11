@@ -44,11 +44,11 @@ class Manhattan(BaseAlgorithm):
         # TODO: Validate in `validate` module
 
         doublearray = ctypes.c_double * len_p
-        self.lib.distance.argtypes = [
+        self.lib.m_distance.argtypes = [
             doublearray,
             doublearray,
             ctypes.c_size_t,
         ]
-        self.lib.distance.restype = ctypes.c_double
+        self.lib.m_distance.restype = ctypes.c_double
 
-        return self.lib.distance(doublearray(*p), doublearray(*q), len_p)
+        return self.lib.m_distance(doublearray(*p), doublearray(*q), len_p)
