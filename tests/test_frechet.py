@@ -1,4 +1,14 @@
-from ..stmeasures.calculate import frechet
+from pytest import fixture
+from pytest import approx
 
-def test_basic():
-    assert frechet.frechet_distance([1, 2, 3], [4, 5, 6]) == 3.0
+from stmeasures.calculate.frechet import Frechet
+
+@fixture(scope="module")
+def frechet():
+    return Frechet()
+
+def test_lib(frechet):
+    assert frechet.lib is not None
+
+def test_basic(frechet):
+    assert frechet.distance([1, 2], [3, 4]) == approx(4.0)

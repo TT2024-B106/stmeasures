@@ -1,8 +1,4 @@
 #include "frechet.h"
-#include "euclidean.h"
-#include <math.h>
-#include <float.h>
-#include <stdlib.h>
 
 double frechet_distance_rec(const double *p, const double *q, size_t i, size_t j, double **cache, size_t size) {
     if (cache[i][j] != -1.0) {

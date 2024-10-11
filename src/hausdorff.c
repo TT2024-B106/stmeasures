@@ -1,6 +1,4 @@
 #include "hausdorff.h"
-#include <math.h>
-#include <float.h>
 
 double point_set_distance(const double *p, const double *q, size_t p_size, size_t q_size) {
     double max_min_distance = 0.0;
