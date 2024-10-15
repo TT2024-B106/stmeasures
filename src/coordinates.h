@@ -1,6 +1,8 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
 
+#include <stddef.h>
+
 typedef struct {
     double latitude;
     double longitude;
