@@ -1,5 +1,4 @@
 import ctypes
-import os
 from stmeasures.calculate.base import BaseAlgorithm
 
 
@@ -17,11 +16,6 @@ class RDP(BaseAlgorithm):
     """
 
     def __init__(self, libname="librdp") -> None:
-        """Initializes the RDP class with the shared C library.
-        
-        Args:
-            libname (str): The name of the shared library (default is "librdp").
-        """
         super().__init__(libname)
 
         self.lib.rdp_execute.argtypes = [ctypes.POINTER(CoordinateSequence), ctypes.c_double]
