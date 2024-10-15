@@ -4,14 +4,13 @@
 #include <stddef.h>
 
 typedef struct {
-    double latitude;
-    double longitude;
+  double latitude;
+  double longitude;
 } Point;
 
 typedef struct {
-    Point *points;  // Apuntador a un arreglo de puntos
-    size_t size;    // Tamaño del arreglo
+  Point *points; // Apuntador a un arreglo de puntos
+  size_t size;   // Tamaño del arreglo
 } CoordinateSequence;
 
 #endif
-
