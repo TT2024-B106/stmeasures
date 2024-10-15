@@ -84,9 +84,12 @@ int **calculate_optimal_path(double **accumulatedCost, int m, int n,
     return NULL;
   }
 
-  for (int i = 0; i < m + n; ++i) {
-    optimalPath[i] = (int *)malloc(
-        2 * sizeof(int)); // Cada entrada tiene dos elementos (i, j)
+  *path_size = 0;
+  int max_path_size = m + n - 1; // Tamaño máximo posible del camino
+
+  // Inicializar todos los elementos de optimalPath
+  for (int i = 0; i < max_path_size; ++i) {
+    optimalPath[i] = (int *)malloc(2 * sizeof(int));
     if (optimalPath[i] == NULL) {
       fprintf(stderr, "Error al asignar memoria para el punto óptimo %d\n", i);
       // Liberar la memoria asignada previamente
@@ -100,12 +103,24 @@ int **calculate_optimal_path(double **accumulatedCost, int m, int n,
 
   int i = m - 1;
   int j = n - 1;
-  *path_size = 0;
 
-  while (i > 0 || j > 0) {
+  while (i >= 0 || j >= 0) {
+    if (*path_size >= max_path_size) {
+      // Manejar error: el camino es más largo de lo esperado
+      for (int k = 0; k < max_path_size; ++k) {
+        free(optimalPath[k]);
+      }
+      free(optimalPath);
+      return NULL;
+    }
+
     optimalPath[*path_size][0] = i;
     optimalPath[*path_size][1] = j;
     (*path_size)++;
+
+    if (i == 0 && j == 0) {
+      break;
+    }
 
     double minCost = DBL_MAX;
 
@@ -116,13 +131,11 @@ int **calculate_optimal_path(double **accumulatedCost, int m, int n,
                     accumulatedCost[i - 1][j - 1] // Movimiento diagonal
                     ));
     }
-    if (i > 0 && j <= 0) {
-      minCost =
-          fmin(minCost, accumulatedCost[i - 1][j]); // Movimiento hacia abajo
+    if (i > 0 && j == 0) {
+      minCost = accumulatedCost[i - 1][j]; // Movimiento hacia abajo
     }
-    if (j > 0 && i <= 0) {
-      minCost = fmin(
-          minCost, accumulatedCost[i][j - 1]); // Movimiento hacia la izquierda
+    if (j > 0 && i == 0) {
+      minCost = accumulatedCost[i][j - 1]; // Movimiento hacia la izquierda
     }
 
     // Actualizamos las coordenadas según el movimiento con el costo mínimo
@@ -131,15 +144,10 @@ int **calculate_optimal_path(double **accumulatedCost, int m, int n,
       j--;
     } else if (i > 0 && accumulatedCost[i - 1][j] == minCost) {
       i--;
-    } else {
+    } else if (j > 0) {
       j--;
     }
   }
-
-  // Agregar el punto (0, 0) al camino óptimo
-  optimalPath[*path_size][0] = 0;
-  optimalPath[*path_size][1] = 0;
-  (*path_size)++;
 
   // Invertir el camino para que sea desde (0, 0) hasta (m-1, n-1)
   for (int k = 0; k < *path_size / 2; ++k) {
