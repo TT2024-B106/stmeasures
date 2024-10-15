@@ -3,11 +3,14 @@ CC = gcc
 CFLAGS = -fPIC -Wall
 LDFLAGS = -shared
 
-all: libeuclidean.so
+all: libdtw.so libeuclidean.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
 
+libdtw.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
+	
 clean:
 	rm -f *.so
 	[ -e "dist" ] && rm -r dist || :
