@@ -34,8 +34,18 @@ double perpendicular_distance(const Point *p, const Point *line_start,
 
 void simplify_line(const CoordinateSequence *input, double tolerance,
                    CoordinateSequence *output) {
+  if (input == NULL || output == NULL || tolerance < 0) {
+    fprintf(stderr, "Error: Entrada inválida en simplify_line\n");
+    return;
+  }
+
   if (input->size < 2) {
     output->points = (Point *)malloc(input->size * sizeof(Point));
+    if (output->points == NULL) {
+      fprintf(stderr,
+              "Error: No se pudo asignar memoria para output->points\n");
+      return;
+    }
     for (size_t i = 0; i < input->size; ++i) {
       output->points[i] = input->points[i];
     }
@@ -63,15 +73,28 @@ void simplify_line(const CoordinateSequence *input, double tolerance,
     CoordinateSequence left_subsequence = {input->points, max_index + 1};
     CoordinateSequence right_subsequence = {&input->points[max_index],
                                             input->size - max_index};
-
     CoordinateSequence simplified_left = {NULL, 0};
     CoordinateSequence simplified_right = {NULL, 0};
 
     simplify_line(&left_subsequence, tolerance, &simplified_left);
     simplify_line(&right_subsequence, tolerance, &simplified_right);
 
+    if (simplified_left.points == NULL || simplified_right.points == NULL) {
+      fprintf(stderr, "Error: Fallo en la simplificación recursiva\n");
+      free(simplified_left.points);
+      free(simplified_right.points);
+      return;
+    }
+
     output->size = simplified_left.size + simplified_right.size - 1;
     output->points = (Point *)malloc(output->size * sizeof(Point));
+    if (output->points == NULL) {
+      fprintf(stderr,
+              "Error: No se pudo asignar memoria para output->points\n");
+      free(simplified_left.points);
+      free(simplified_right.points);
+      return;
+    }
 
     for (size_t i = 0; i < simplified_left.size; ++i) {
       output->points[i] = simplified_left.points[i];
@@ -85,6 +108,11 @@ void simplify_line(const CoordinateSequence *input, double tolerance,
   } else {
     output->size = 2;
     output->points = (Point *)malloc(2 * sizeof(Point));
+    if (output->points == NULL) {
+      fprintf(stderr,
+              "Error: No se pudo asignar memoria para output->points\n");
+      return;
+    }
     output->points[0] = *start;
     output->points[1] = *end;
   }
