@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -fPIC -Wall
 LDFLAGS = -shared
 
-all: libdrp.so libeuclidean.so
+all: librdp.so libeuclidean.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
