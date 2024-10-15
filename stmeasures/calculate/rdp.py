@@ -1,14 +1,6 @@
 import ctypes
 from stmeasures.calculate.base import BaseAlgorithm
-
-
-class Point(ctypes.Structure):
-    _fields_ = [("latitude", ctypes.c_double), ("longitude", ctypes.c_double)]
-
-
-class CoordinateSequence(ctypes.Structure):
-    _fields_ = [("points", ctypes.POINTER(Point)), ("size", ctypes.c_size_t)]
-
+from coordinates import Point, CoordinateSequence
 
 class RDP(BaseAlgorithm):
     """An RDP class that implements the Ramer-Douglas-Peucker (RDP) algorithm
