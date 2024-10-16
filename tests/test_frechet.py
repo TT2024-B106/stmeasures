@@ -1,4 +1,4 @@
-from pytest
+import pytest
 
 from stmeasures.calculate.frechet import Frechet
 
