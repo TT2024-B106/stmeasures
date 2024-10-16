@@ -2,7 +2,7 @@ import pytest
 
 from stmeasures.calculate.hausdorff import Hausdorff
 
-@fixture(scope="module")
+@pytest.@fixture(scope="module")
 def hausdorff():
     return Hausdorff()
 
