@@ -1,6 +1,7 @@
 import ctypes
+from stmeasures.calculate.base import BaseAlgorithm
 
-class Frechet:
+class Frechet(BaseAlgorithm):
     """A Frechet instance that computes the Frechet distance
     between two trajectories-like (`list[float]`).
 
@@ -20,7 +21,7 @@ class Frechet:
 
     def __init__(self, libname="libfrechet") -> None:
         """Initialize the Frechet instance and load the shared library."""
-        self.lib = ctypes.CDLL(libname)
+        super().__init__(libname)
 
     def distance(self, p: list[float], q: list[float]) -> float:
         """Return the Frechet distance between two trajectories.
@@ -31,16 +32,11 @@ class Frechet:
             A first vector in n-space
         q : list[float]
             A second vector in n-space
-
-        Returns
-        -------
-        float
-            The computed Frechet distance.
         """
-        len_p, len_q = len(p), len(q)
+        len_p = len(p)
+        len_q = len(q)
 
-        if not p or not q:
-            raise ValueError("One or both arrays are empty")
+        # TODO: Validate in `validate` module
 
         # Define the array types for `p` and `q`
         doublearray_p = ctypes.c_double * len_p
@@ -57,8 +53,8 @@ class Frechet:
 
         # Call the C function and return the result
         return self.lib.frechet_distance(
-            doublearray_p(*p), 
-            doublearray_q(*q), 
-            len_p, 
+            doublearray_p(*p),
+            doublearray_q(*q),
+            len_p,
             len_q
         )
