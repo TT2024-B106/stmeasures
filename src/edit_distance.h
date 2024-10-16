@@ -4,7 +4,7 @@
 #include "manhattan.h"
 #include "math_utils.h"
 
-double edrs_distance(
+double ers(
     const double *r,
     const double *s,
     size_t size_r,

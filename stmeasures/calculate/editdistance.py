@@ -23,7 +23,7 @@ class EditDistance(BaseAlgorithm):
     def __init__(self, libname="libeditdist") -> None:
         super().__init__(libname)
 
-    def on_real_sequences(
+    def ers(
             self,
             r: list[float],
             s: list[float],
@@ -33,7 +33,7 @@ class EditDistance(BaseAlgorithm):
             subcost_within_sigma: float = 0.0,
             subcost_outside_sigma: float = 1.0
         ) -> float:
-        """Return the Edit Distance on Real Sequences.
+        """Return the Edit Distance on Real Sequences (ERS).
 
         Parameters
         ----------
@@ -59,7 +59,7 @@ class EditDistance(BaseAlgorithm):
         r_array = ctypes.c_double * len_r
         s_array = ctypes.c_double * len_s
 
-        self.lib.edrs_distance.argtypes = [
+        self.lib.ers.argtypes = [
             r_array,
             s_array,
             ctypes.c_size_t,
@@ -70,9 +70,9 @@ class EditDistance(BaseAlgorithm):
             ctypes.c_double,
             ctypes.c_double,
         ]
-        self.lib.edrs_distance.restype = ctypes.c_double
+        self.lib.ers.restype = ctypes.c_double
 
-        return self.lib.edrs_distance(
+        return self.lib.ers(
             r_array(*r),
             s_array(*s),
             len_r,
