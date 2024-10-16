@@ -1,62 +1,44 @@
-// frechet.c
 #include "frechet.h"
 #include <math.h>
-#include <stdlib.h>
+#include <float.h>
 
-// Function to calculate Euclidean distance between two points
-static double distance_between_points(const double *p, const double *q) {
-    double dx = p[0] - q[0];
-    double dy = p[1] - q[1];
-    return sqrt(dx * dx + dy * dy);
+double min3(double a, double b, double c) {
+    if (a <= b && a <= c) return a;
+    if (b <= a && b <= c) return b;
+    return c;
 }
 
-// Global cache for memoization
-static double **ca;
-
-// Recursive function to compute Frechet distance
-static double c_recursive(int i, int j, const double *curve1, size_t size1, const double *curve2, size_t size2) {
-    if (ca[i][j] > -1) {
-        return ca[i][j];
+double ca(int i, int j, const double *P, const double *Q, double **c) {
+    if (c[i][j] > -1) {
+        return c[i][j];
+    }
+    if (i == 0 && j == 0) {
+        c[i][j] = hypot(P[0] - Q[0], P[1] - Q[1]);
+    } else if (i > 0 && j == 0) {
+        c[i][j] = fmax(ca(i-1, 0, P, Q, c), hypot(P[2*i] - Q[0], P[2*i+1] - Q[1]));
+    } else if (i == 0 && j > 0) {
+        c[i][j] = fmax(ca(0, j-1, P, Q, c), hypot(P[0] - Q[2*j], P[1] - Q[2*j+1]));
+    } else if (i > 0 && j > 0) {
+        c[i][j] = fmax(min3(ca(i-1, j, P, Q, c), ca(i-1, j-1, P, Q, c), ca(i, j-1, P, Q, c)),
+                       hypot(P[2*i] - Q[2*j], P[2*i+1] - Q[2*j+1]));
     } else {
-        double dist = distance_between_points(&curve1[2 * i], &curve2[2 * j]);
-        if (i == 0 && j == 0) {
-            ca[i][j] = dist;
-        } else if (i > 0 && j == 0) {
-            ca[i][j] = fmax(c_recursive(i - 1, 0, curve1, size1, curve2, size2), dist);
-        } else if (i == 0 && j > 0) {
-            ca[i][j] = fmax(c_recursive(0, j - 1, curve1, size1, curve2, size2), dist);
-        } else if (i > 0 && j > 0) {
-            double min_prev = fmin(
-                fmin(c_recursive(i - 1, j, curve1, size1, curve2, size2),
-                     c_recursive(i - 1, j - 1, curve1, size1, curve2, size2)),
-                c_recursive(i, j - 1, curve1, size1, curve2, size2)
-            );
-            ca[i][j] = fmax(min_prev, dist);
-        } else {
-            ca[i][j] = INFINITY;
-        }
+        c[i][j] = DBL_MAX;
     }
-    return ca[i][j];
+    return c[i][j];
 }
 
-double frechet_distance(const double *curve1, size_t size1, const double *curve2, size_t size2) {
-    // Allocate memory for cache
-    ca = (double **)malloc(size1 * sizeof(double *));
-    for (size_t i = 0; i < size1; ++i) {
-        ca[i] = (double *)malloc(size2 * sizeof(double));
-        for (size_t j = 0; j < size2; ++j) {
-            ca[i][j] = -1.0;
+double frechet_distance(const double *P, const double *Q, size_t m, size_t n) {
+    double **c = (double **)malloc(m * sizeof(double *));
+    for (size_t i = 0; i < m; i++) {
+        c[i] = (double *)malloc(n * sizeof(double));
+        for (size_t j = 0; j < n; j++) {
+            c[i][j] = -1.0;
         }
     }
-
-    // Compute Frechet distance
-    double result = c_recursive(size1 - 1, size2 - 1, curve1, size1, curve2, size2);
-
-    // Free allocated memory
-    for (size_t i = 0; i < size1; ++i) {
-        free(ca[i]);
+    double result = ca(m-1, n-1, P, Q, c);
+    for (size_t i = 0; i < m; i++) {
+        free(c[i]);
     }
-    free(ca);
-
+    free(c);
     return result;
 }
