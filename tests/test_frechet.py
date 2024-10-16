@@ -1,5 +1,4 @@
-from pytest import fixture
-from pytest import approx
+from pytest
 
 from stmeasures.calculate.frechet import Frechet
 
