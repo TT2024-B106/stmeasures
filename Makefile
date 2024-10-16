@@ -5,29 +5,24 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-# Object files
-OBJ_FILES = euclidean.pic.o hausdorff.pic.o frechet.pic.o dtw.pic.o
-
-# Targets for shared libraries
 all: libeuclidean.so libhausdorff.so libfrechet.so libdtw.so
 
-libeuclidean.so: src/euclidean.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+libeuclidean.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
 
-libhausdorff.so: src/hausdorff.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+libhausdorff.so:
+	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/hausdorff.c
+  
+libfrechet.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/frechet.c
 
-libfrechet.so: src/frechet.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
-
-libdtw.so: src/dtw.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
-
-# Rule for building object files if needed
-%.pic.o: src/%.c
-	$(CC) $(CFLAGS) $(POSFLAGS) $(OBJFLAGS) $< $@
+libdtw.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
 
 clean:
-	rm -f *.so *.o
+	rm -f *.so
+	rm -f *.o
 	[ -e "dist" ] && rm -r dist || :
 	[ -e "stmeasures-clib" ] && rm -r stmeasures-clib || :
+wait for the rest of the documents
