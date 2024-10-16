@@ -15,9 +15,12 @@ class EditDistance(BaseAlgorithm):
 
     Examples
     --------
-    Calculating the Edit Distance On these Real Sequences {...} and {...}
+    Calculating the Edit Distance with Real Penalty of Point 1 (1, 2) and
+    Point 2 (3, 4)
 
-    TODO
+    >>> editdistance = EditDistance() # Intializes object and loads shared library
+    >>> editdistance.erp([1,2],[3,4])
+    4.0
     """
 
     def __init__(self, libname="libeditdist") -> None:
