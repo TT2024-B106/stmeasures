@@ -5,32 +5,29 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
+# Object files
+OBJ_FILES = euclidean.pic.o hausdorff.pic.o frechet.pic.o dtw.pic.o
+
+# Targets for shared libraries
 all: libeuclidean.so libhausdorff.so libfrechet.so libdtw.so
 
-# Compile Euclidean library
-libeuclidean.so:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
+libeuclidean.so: src/euclidean.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-# Compile Hausdorff library using the object file from Euclidean
-libhausdorff.so: euclidean.pic.o
-	$(CC) $(CFLAGS) $(POSFLAGS) src/hausdorff.c $(OBJFLAGS) hausdorff.pic.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ euclidean.pic.o hausdorff.pic.o
+libhausdorff.so: src/hausdorff.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-# Compile Frechet library
-libfrechet.so:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/frechet.c
+libfrechet.so: src/frechet.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-# Compile DTW library
-libdtw.so:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
+libdtw.so: src/dtw.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-# Compile Euclidean object file for reuse
-euclidean.pic.o:
-	$(CC) $(CFLAGS) $(OBJFLAGS) $@ src/euclidean.c
+# Rule for building object files if needed
+%.pic.o: src/%.c
+	$(CC) $(CFLAGS) $(POSFLAGS) $(OBJFLAGS) $< $@
 
-# Clean up
 clean:
-	rm -f *.so
-	rm -f *.o
+	rm -f *.so *.o
 	[ -e "dist" ] && rm -r dist || :
 	[ -e "stmeasures-clib" ] && rm -r stmeasures-clib || :
