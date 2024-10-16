@@ -13,7 +13,6 @@ libeuclidean.so:
 libhausdorff.so:
 	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/hausdorff.c
-	$(CC) $(LDFLAGS) manhattan.pic.o math_utils.pic.o editdist.pic.o -o $@
   
 libfrechet.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/frechet.c
