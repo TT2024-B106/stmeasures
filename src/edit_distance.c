@@ -53,3 +53,35 @@ double edrs_distance(
 
     return dp[rows - 1][cols - 1];
 }
+
+double erp(
+    const double *r,
+    const double *s,
+    size_t size_r,
+    size_t size_s,
+    double g
+){
+    int m = size_r;
+    int n = size_s;
+    double dp[m + 1][n + 1];
+
+    dp[0][0] = 0.0;
+	for (int i = 1; i <= m; i++) {
+		dp[i][0] = dp[i - 1][0] + s_m_distance(r[i - 1], g);
+	}
+	for (int j = 1; j <= n; j++) {
+		dp[0][j] = dp[0][j - 1] + s_m_distance(s[j - 1], g);
+	}
+
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            double cost_match = dp[i - 1][j - 1] + s_m_distance(r[i - 1], s[j - 1]);
+            double cost_gap_r = dp[i - 1][j] + s_m_distance(r[i - 1], g);
+            double cost_gap_s = dp[i][j - 1] + s_m_distance(s[j - 1], g);
+
+            dp[i][j] = fmin(cost_match, fmin(cost_gap_r, cost_gap_s));
+        }
+    }
+
+    return dp[m][n];
+}

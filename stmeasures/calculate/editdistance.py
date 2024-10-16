@@ -83,3 +83,44 @@ class EditDistance(BaseAlgorithm):
             subcost_within_sigma,
             subcost_outside_sigma
         )
+
+    def erp(
+            self,
+            r: list[float],
+            s: list[float],
+            g: float = 0.0
+        ) -> float:
+        """Return the Edit Distance with Real Penalty (ERP).
+
+        Parameters
+        ----------
+        r : list[float]
+            A first vector in n-space.
+        s : list[float]
+            A second vector in n-space.
+        g : float, default: 0.0
+            The gap constant of edit distance.
+        """
+        len_r, len_s = len(r), len(s)
+
+        # TODO: Validate in `validate` module
+
+        r_array = ctypes.c_double * len_r
+        s_array = ctypes.c_double * len_s
+
+        self.lib.erp.argtypes = [
+            r_array,
+            s_array,
+            ctypes.c_size_t,
+            ctypes.c_size_t,
+            ctypes.c_double,
+        ]
+        self.lib.erp.restype = ctypes.c_double
+
+        return self.lib.erp(
+            r_array(*r),
+            s_array(*s),
+            len_r,
+            len_s,
+            g
+        )

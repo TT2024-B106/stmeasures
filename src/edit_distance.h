@@ -16,4 +16,12 @@ double edrs_distance(
     double subcost_within_sigma
 );
 
+double erp(
+    const double *r,
+    const double *s,
+    size_t size_r,
+    size_t size_s,
+    double g
+);
+
 #endif
