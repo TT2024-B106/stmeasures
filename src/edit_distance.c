@@ -41,11 +41,11 @@ double ers(
                 subcost = subcost_within_sigma;
             }
 
-            double min_cost = min(INFINITY, dp[i - 1][j -1] + subcost);
+            double min_cost = fmin(INFINITY, dp[i - 1][j -1] + subcost);
             // Deletion from R
-            min_cost = min(min_cost, dp[i - 1][j] + cost_del);
+            min_cost = fmin(min_cost, dp[i - 1][j] + cost_del);
             // Insertion into S
-            min_cost = min(min_cost, dp[i][j - 1] + cost_ins);
+            min_cost = fmin(min_cost, dp[i][j - 1] + cost_ins);
 
             dp[i][j] = min_cost;
         }

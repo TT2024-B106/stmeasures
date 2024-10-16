@@ -12,12 +12,11 @@ libeuclidean.so:
 
 libmanhattan.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/manhattan.c
+	$(CC) $(CFLAGS) $(POSFLAGS) src/manhattan.c $(OBJFLAGS) manhattan.pic.o
 
 libeditdist.so:
-	$(CC) $(CFLAGS) $(POSFLAGS) src/manhattan.c $(OBJFLAGS) manhattan.pic.o
-	$(CC) $(CFLAGS) $(POSFLAGS) src/math_utils.c $(OBJFLAGS) math_utils.pic.o
 	$(CC) $(CFLAGS) $(POSFLAGS) src/edit_distance.c $(OBJFLAGS) editdist.pic.o
-	$(CC) $(LDFLAGS) manhattan.pic.o math_utils.pic.o editdist.pic.o -o $@
+	$(CC) $(LDFLAGS) manhattan.pic.o editdist.pic.o -o $@
 
 clean:
 	rm -f *.so

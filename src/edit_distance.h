@@ -2,7 +2,6 @@
 #define ED_H
 
 #include "manhattan.h"
-#include "math_utils.h"
 
 double ers(
     const double *r,
