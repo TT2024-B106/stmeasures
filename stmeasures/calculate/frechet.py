@@ -1,8 +1,9 @@
 import ctypes
 from stmeasures.calculate.base import BaseAlgorithm
+import os
 
 class Frechet(BaseAlgorithm):
-    def __init__(self, libname="libfrechet") -> None:
+    def __init__(self, libname="stmeasures-clib/libfrechet.so") -> None:
         super().__init__(libname)
 
     def distance(self, P: list[float], Q: list[float]) -> float:
