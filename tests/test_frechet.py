@@ -2,7 +2,7 @@ import pytest
 
 from stmeasures.calculate.frechet import Frechet
 
-@pytest.@fixture(scope="module")
+@pytest.fixture(scope="module")
 def frechet():
     return Frechet()
 
