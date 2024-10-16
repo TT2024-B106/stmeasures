@@ -5,7 +5,7 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-all: libeuclidean.so libmanhattan.so libeditdist.so
+all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
@@ -17,6 +17,9 @@ libmanhattan.so:
 libeditdist.so:
 	$(CC) $(CFLAGS) $(POSFLAGS) src/edit_distance.c $(OBJFLAGS) editdist.pic.o
 	$(CC) $(LDFLAGS) manhattan.pic.o editdist.pic.o -o $@
+
+liblcss.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/lcss.c
 
 clean:
 	rm -f *.so
