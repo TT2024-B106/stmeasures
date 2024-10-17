@@ -15,6 +15,6 @@ libfrechet.so:
 
 clean:
     rm -f *.so
-    rm -f *.oruf
+    rm -f *.o
     [ -e "dist" ] && rm -r dist || :
     [ -e "stmeasures-clib" ] && rm -r stmeasures-clib || :
