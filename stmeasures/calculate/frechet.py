@@ -1,6 +1,5 @@
 import ctypes
 from stmeasures.calculate.base import BaseAlgorithm
-import os
 
 class Frechet(BaseAlgorithm):
     def __init__(self, libname="stmeasures-clib/libfrechet.so") -> None:
