@@ -15,6 +15,10 @@ libfrechet.so:
 	$(CC) $(CFLAGS) $(POSFLAGS) src/frechet.c $(OBJFLAGS) frechet.pic.o
 	$(CC) $(LDFLAGS) euclidean.pic.o frechet.pic.o -o $@
 
+libhausdorff.so:
+	$(CC) $(CFLAGS) $(POSFLAGS) src/hausdorff.c $(OBJFLAGS) hausdorff.pic.o
+	$(CC) $(LDFLAGS) hausdorff.pic.o -o $@
+
 clean:
 	rm -f *.so *.o
 	[ -e "dist" ] && rm -r dist || :
