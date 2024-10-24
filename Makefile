@@ -5,7 +5,7 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so librdp.so
+all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
@@ -32,6 +32,9 @@ liblcss.so:
 librdp.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/rdp.c	
 
+libdtw.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
+	
 clean:
 	rm -f *.so *.o
 	[ -e "dist" ] && rm -r dist || :
