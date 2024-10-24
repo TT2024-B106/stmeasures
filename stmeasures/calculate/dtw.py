@@ -1,5 +1,4 @@
 import ctypes
-import os
 from stmeasures.calculate.base import BaseAlgorithm
 
 
