@@ -9,7 +9,7 @@ libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
 
 libdtw.so:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c src/euclidean.c src/matrix.c
 	
 clean:
 	rm -f *.so
