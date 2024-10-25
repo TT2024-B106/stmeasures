@@ -1,7 +1,6 @@
 import ctypes
-import os
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.calculate.trajectory import Trajectory, Point
+from stmeasures.objects.cstructures import Trajectory, Point
 
 class DTW(BaseAlgorithm):
     """
