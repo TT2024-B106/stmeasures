@@ -57,4 +57,3 @@ class DTW(BaseAlgorithm):
         seq2_c = Trayectory(seq2_points, len(seq2))
 
         return self.lib.dtw_execute(ctypes.byref(seq1_c), ctypes.byref(seq2_c))
-
