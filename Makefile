@@ -33,9 +33,14 @@ librdp.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/rdp.c	
 
 libdtw.so:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/dtw.c
+	$(CC) $(CFLAGS) $(POSFLAGS) src/trajectory.c $(OBJFLAGS) trajectory.pic.o
+	$(CC) $(CFLAGS) $(POSFLAGS) src/matrix.c $(OBJFLAGS) matrix.pic.o
+	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
+	$(CC) $(CFLAGS) $(POSFLAGS) src/dtw.c $(OBJFLAGS) dtw.pic.o
+	$(CC) $(LDFLAGS) trajectory.pic.o matrix.pic.o euclidean.pic.o dtw.pic.o -o $@
 	
 clean:
 	rm -f *.so *.o
 	[ -e "dist" ] && rm -r dist || :
 	[ -e "stmeasures-clib" ] && rm -r stmeasures-clib || :
+	pip uninstall -y stmeasures
