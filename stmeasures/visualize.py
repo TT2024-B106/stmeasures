@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
-from stmeasures.calculate.dtw import DTW
 import numpy as np
+
+from stmeasures.calculate.dtw import DTW
 
 def plot_trajectories(seq1, seq2, title="Comparación de Rutas"):
     seq1_array = np.array(seq1)
@@ -19,16 +20,13 @@ def plot_trajectories(seq1, seq2, title="Comparación de Rutas"):
                     [seq1[i][1], seq2[j][1]], 
                     'gray', alpha=0.1, linestyle='--')
     
-
     plt.title(title)
     plt.xlabel('Longitud')
     plt.ylabel('Latitud')
     plt.legend()
     plt.grid(True)
     
-
     plt.show()
-
 
 def main():
     seq1 = [
