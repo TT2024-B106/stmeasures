@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-DoubleMatrix *calculate_dtw_matrix(const Trayectory *seq1,
-                                   const Trayectory *seq2) {
+DoubleMatrix *calculate_dtw_matrix(const Trajectory *seq1,
+                                   const Trajectory *seq2) {
   int m = seq1->size;
   int n = seq2->size;
 
@@ -134,8 +134,8 @@ double calculate_cost_from_optimal_path(DoubleMatrix *accumulatedCost,
   return cost;
 }
 
-double dtw_execute(const Trayectory *seq1,
-                   const Trayectory *seq2) {
+double dtw_execute(const Trajectory *seq1,
+                   const Trajectory *seq2) {
   DoubleMatrix *matrizCostos = calculate_dtw_matrix(seq1, seq2);
   if (matrizCostos == NULL) {
     return -1.0;

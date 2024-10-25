@@ -1,14 +1,14 @@
 #ifndef DTW_H
 #define DTW_H
 
-#include "trayectory.h"
+#include "trajectory.h"
 #include "matrix.h"
 
-double dtw_execute(const Trayectory *seq1,
-                   const Trayectory *seq2);
+double dtw_execute(const Trajectory *seq1,
+                   const Trajectory *seq2);
 
-DoubleMatrix *calculate_dtw_matrix(const Trayectory *seq1,
-                                   const Trayectory *seq2);
+DoubleMatrix *calculate_dtw_matrix(const Trajectory *seq1,
+                                   const Trajectory *seq2);
 
 int **calculate_optimal_path(DoubleMatrix *accumulatedCost, int *path_size);
 

@@ -1,7 +1,7 @@
 import ctypes
 import os
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.calculate.trayectory import Trayectory, Point
+from stmeasures.calculate.trajectory import Trajectory, Point
 
 class DTW(BaseAlgorithm):
     """
@@ -30,7 +30,7 @@ class DTW(BaseAlgorithm):
         """
         super().__init__(libname)
 
-        self.lib.dtw_execute.argtypes = [ctypes.POINTER(Trayectory), ctypes.POINTER(Trayectory)]
+        self.lib.dtw_execute.argtypes = [ctypes.POINTER(Trajectory), ctypes.POINTER(Trajectory)]
         self.lib.dtw_execute.restype = ctypes.c_double
 
     def distance(self, seq1: list[tuple[float, float]], seq2: list[tuple[float, float]]) -> float:
@@ -53,7 +53,7 @@ class DTW(BaseAlgorithm):
         seq1_points = (Point * len(seq1))(*[Point(lat, lon) for lat, lon in seq1])
         seq2_points = (Point * len(seq2))(*[Point(lat, lon) for lat, lon in seq2])
 
-        seq1_c = Trayectory(seq1_points, len(seq1))
-        seq2_c = Trayectory(seq2_points, len(seq2))
+        seq1_c = Trajectory(seq1_points, len(seq1))
+        seq2_c = Trajectory(seq2_points, len(seq2))
 
         return self.lib.dtw_execute(ctypes.byref(seq1_c), ctypes.byref(seq2_c))

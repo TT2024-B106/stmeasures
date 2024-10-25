@@ -11,6 +11,6 @@ typedef struct {
 typedef struct {
   Point *points; // Apuntador a un arreglo de puntos
   size_t size;   // Tamaño del arreglo
-} Trayectory;
+} Trajectory;
 
 #endif

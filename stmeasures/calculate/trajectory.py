@@ -13,7 +13,7 @@ class Point(ctypes.Structure):
     _fields_ = [("latitude", ctypes.c_double), ("longitude", ctypes.c_double)]
 
 
-class Trayectory(ctypes.Structure):
+class Trajectory(ctypes.Structure):
     """
     Represents a sequence of geographical points.
 
