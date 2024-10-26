@@ -2,6 +2,7 @@
 
 import ctypes
 
+from stmeasures.validation import validate_euclidean
 from stmeasures.calculate.base import BaseAlgorithm
 
 class Euclidean(BaseAlgorithm):
@@ -39,17 +40,32 @@ class Euclidean(BaseAlgorithm):
         q : list[float]
             A second vector in Euclidean n-space
         """
-        len_p = len(p)
+        try:
+            len_p = len(p)
 
-        # TODO: Validation in Base class?
-        #       Could be better to create a whole `validate` module
+            validate_euclidean(p, q)
 
-        doublearray = ctypes.c_double * len_p
-        self.lib.distance.argtypes = [
-            doublearray,
-            doublearray,
-            ctypes.c_size_t,
-        ]
-        self.lib.distance.restype = ctypes.c_double
+            doublearray = ctypes.c_double * len_p
+            self.lib.distance.argtypes = [
+                doublearray,
+                doublearray,
+                ctypes.c_size_t,
+            ]
+            self.lib.distance.restype = ctypes.c_double
 
-        return self.lib.distance(doublearray(*p), doublearray(*q), len_p)
+            return self.lib.distance(doublearray(*p), doublearray(*q), len_p)
+        except ValueError as ve:
+            print(ve)
+            raise RuntimeError(
+                f"Invalid parameters p:{p}, q:{q} in {self.__module__}"
+            ) from ve
+        except ctypes.ArgumentError as ae:
+            print(ae)
+            raise RuntimeError(
+                f"Argument error in C shared library call {self._libpath}"
+            ) from ae
+        except Exception as e:
+            print(e)
+            raise RuntimeError(
+                f"Unexpected error in {self.__module__}"
+            ) from e
