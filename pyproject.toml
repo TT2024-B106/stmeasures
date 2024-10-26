@@ -36,6 +36,19 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering :: GIS",
 ]
+dependencies = [
+  "contourpy",
+  "cycler",
+  "fonttools",
+  "kiwisolver",
+  "matplotlib",
+  "numpy",
+  "packaging",
+  "pillow",
+  "pyparsing",
+  "python-dateutil",
+  "six"
+]
 
 #TODO: Add optional dependencies through `project.optional` (if needed)
 
