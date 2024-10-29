@@ -12,4 +12,4 @@ Calculate Module
 ----------------
 
 .. autoclass:: calculate.base.BaseAlgorithm
-.. autoclass:: euclidean.Euclidean
+.. autodoc:: calculate.euclidean.Euclidean
