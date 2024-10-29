@@ -6,39 +6,62 @@ from stmeasures.validation import validate_euclidean
 from stmeasures.calculate.base import BaseAlgorithm
 
 class Euclidean(BaseAlgorithm):
-    """An euclidean instance that mainly computes the euclidean algorithm
-    between two trajectories-like (`list[float]`).
+    """
+    An instance for calculating the Euclidean distance between two lists of
+    floats (trajectories).
 
-    Parameters
-    ----------
-    libname : str, default: "libeuclidean"
+    :param libname: 
         The file name of the compiled shared library.
+    :type libname: str, default "libeuclidean"
 
-    Examples
-    --------
-    Calculating the euclidean distance of Point 1 (1, 2) and Point 2 (3, 4)
+    :example:
+        Calculating the Euclidean distance between two points:
 
-    >>> euclidean = Euclidean() # Intializes object and loads shared library
-    >>> euclidean.distance([1, 2], [3, 4])
-    2.8284271247461903
+        >>> euclidean = Euclidean()  # Initializes object and loads shared library
+        >>> euclidean.distance([1, 2], [3, 4])
+        2.8284271247461903
     """
 
     def __init__(self, libname="libeuclidean") -> None:
+        """
+        Initializes the Euclidean distance calculator with a specified library
+        name.
+
+        :param libname: 
+            The file name of the compiled shared library.
+        :type libname: str, default "libeuclidean"
+        """
         super().__init__(libname)
 
-    def distance(
-            self,
-            p: list[float],
-            q: list[float]
-        ) -> float:
-        """Return the euclidean distance between two trajectories.
+    def distance(self, p: list[float], q: list[float]) -> float:
+        """
+        Calculates the Euclidean distance between two trajectories.
 
-        Parameters
-        ----------
-        p : list[float]
-            A first vector in Euclidean n-space
-        q : list[float]
-            A second vector in Euclidean n-space
+        :param p:
+            The first vector in Euclidean n-space.
+        :type p: list[float]
+
+        :param q:
+            The second vector in Euclidean n-space.
+        :type q: list[float]
+
+        :return: The Euclidean distance between the two input vectors.
+        :rtype: float
+
+        :raises ValueError:
+            - if `p` or `q` is not a list of floats or if they do not have the
+              same length
+
+        :raises RuntimeError:
+            - if there is an error with the C library call
+            - if an unexpected error occurs during execution
+
+        :example:
+            Calculating the Euclidean distance between two vectors:
+
+            >>> euclidean = Euclidean()
+            >>> euclidean.distance([1.0, 2.0], [3.0, 4.0])
+            2.8284271247461903
         """
         try:
             len_p = len(p)
