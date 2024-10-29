@@ -7,3 +7,8 @@ Validation Module
 -----------------
 
 .. autofunction:: validation.validate_trajectory
+
+Calculate Module
+----------------
+
+.. autoclass:: calculate.base.BaseAlgorithm
