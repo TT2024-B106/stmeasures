@@ -6,4 +6,4 @@ Library API
 Validation Module
 -----------------
 
-.. autofunction:: validate_trajectory
+.. autofunction:: validation.validate_trajectory
