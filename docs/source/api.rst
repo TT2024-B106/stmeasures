@@ -11,9 +11,9 @@ Validation Module
 Calculate Module
 ----------------
 
-Trying autoclass calculate.base.BaseAlgorithm
+Trying automodule calculate.base.BaseAlgorithm
 
-.. autoclass:: calculate.base.BaseAlgorithm
+.. automodule:: calculate.base.BaseAlgorithm
    :members:
 
 Trying autodoc calculate.euclidean.Euclidean
@@ -21,22 +21,22 @@ Trying autodoc calculate.euclidean.Euclidean
 .. autodoc:: calculate.euclidean.Euclidean
    :members:
 
-Trying autoclass calculate.euclidean.euclidean
+Trying automodule calculate.euclidean.euclidean
 
-.. autoclass:: calculate.euclidean.euclidean
+.. automodule:: calculate.euclidean.euclidean
    :members:
 
-Trying autoclass euclidean
+Trying automodule euclidean
 
-.. autoclass:: euclidean
+.. automodule:: euclidean
    :members:
 
-Trying autoclass euclidean.Euclidean
+Trying automodule euclidean.Euclidean
 
-.. autoclass:: euclidean.Euclidean
+.. automodule:: euclidean.Euclidean
    :members:
 
-Trying autoclass euclidean.euclidean
+Trying automodule euclidean.euclidean
 
-.. autoclass:: euclidean.euclidean
+.. automodule:: euclidean.euclidean
    :members:
