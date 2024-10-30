@@ -14,10 +14,12 @@ Calculate Module
 Trying autoclass calculate.base.BaseAlgorithm
 
 .. autoclass:: calculate.base.BaseAlgorithm
+   :members:
 
 Trying autodoc calculate.euclidean.Euclidean
 
 .. autodoc:: calculate.euclidean.Euclidean
+   :members:
 
 Trying autoclass calculate.euclidean.euclidean
 
