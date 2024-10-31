@@ -1,6 +1,6 @@
 import ctypes
 from stmeasures.calculate.base import BaseAlgorithm
-from coordinates import Point, CoordinateSequence
+from stmeasures.objects.cstructures import Trajectory, Point
 
 class RDP(BaseAlgorithm):
     """An RDP class that implements the Ramer-Douglas-Peucker (RDP) algorithm
@@ -10,8 +10,8 @@ class RDP(BaseAlgorithm):
     def __init__(self, libname="librdp") -> None:
         super().__init__(libname)
 
-        self.lib.rdp_execute.argtypes = [ctypes.POINTER(CoordinateSequence), ctypes.c_double]
-        self.lib.rdp_execute.restype = CoordinateSequence
+        self.lib.rdp_execute.argtypes = [ctypes.POINTER(Trajectory), ctypes.c_double]
+        self.lib.rdp_execute.restype = Trajectory
 
     def simplify(self, sequence: list[tuple[float, float]], tolerance: float) -> list[tuple[float, float]]:
         """Simplifies a sequence of coordinates using the RDP algorithm.
@@ -25,7 +25,7 @@ class RDP(BaseAlgorithm):
         """
         seq_points = (Point * len(sequence))(*[Point(lat, lon) for lat, lon in sequence])
 
-        seq_c = CoordinateSequence(seq_points, len(sequence))
+        seq_c = Trajectory(seq_points, len(sequence))
 
         simplified_seq_c = self.lib.rdp_execute(ctypes.byref(seq_c), tolerance)
 
