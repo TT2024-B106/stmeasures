@@ -5,7 +5,6 @@ from stmeasures.validation import (
     validate_numeric_list,
     validate_scalar,
     validate_positive_scalar,
-    validate_distance_parameters,
     validate_dtw,
     validate_ers,
     validate_erp,
@@ -55,12 +54,6 @@ def test_validate_positive_scalar():
     with pytest.raises(ValueError, match="must be a non-negative number"):
         validate_positive_scalar(-5)
 
-def test_validate_distance_parameters():
-    validate_distance_parameters([1.0, 2.0, 3.0], [4.0, 5.0, 6.0])
-
-    with pytest.raises(ValueError, match="The two sequences must have the same length"):
-        validate_distance_parameters([1.0, 2.0], [4.0, 5.0, 6.0])
-
 def test_validate_dtw():
     validate_dtw([(34.05, -118.25)], [(40.71, -74.01)])
 
@@ -79,7 +72,7 @@ def test_validate_erp():
     validate_erp([1.0, 2.0], [3.0, 4.0], g=0.0)
 
 def test_validate_euclidean():
-    validate_euclidean([1.0, 2.0], [3.0, 4.0])
+    validate_euclidean([(1.0, 2.0)], [(3.0, 4.0)])
 
 def test_validate_frechet():
     validate_frechet([1.0, 2.0], [3.0, 4.0])

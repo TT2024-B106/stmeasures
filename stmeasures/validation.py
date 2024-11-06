@@ -4,6 +4,8 @@ This module provides validation functions for trajectory data, numeric lists,
 scalars, and various distance calculation parameters.
 """
 
+from stmeasures.utils.deprecate import deprecated
+
 def validate_trajectory(trajectory: list[tuple[float, float]]):
     """
     Validate that the input is a non-empty list of coordinate tuples with valid
@@ -37,6 +39,7 @@ def validate_trajectory(trajectory: list[tuple[float, float]]):
                 "-180 and 180."
             )
 
+@deprecated # use `validate_trajectory`
 def validate_numeric_list(sequence: list[float]):
     """
     Validate that the input is a non-empty list of numeric values.
@@ -84,28 +87,6 @@ def validate_positive_scalar(value: int | float, name="value"):
     validate_scalar(value, name)
     if value < 0:
         raise ValueError(f"{name} must be a non-negative number.")
-
-def validate_distance_parameters(
-        p: list[float],
-        q: list[float]
-    ):
-    """
-    Validate that two numeric lists are provided and that they have the same
-    length.
-
-    :param p: First numeric list.
-    :type p: list[float]
-    :param q: Second numeric list.
-    :type q: list[float]
-    
-    :raises ValueError: 
-        - If either `p` or `q` is not a numeric list.
-        - If `p` and `q` do not have the same length.
-    """
-    validate_numeric_list(p)
-    validate_numeric_list(q)
-    if len(p) != len(q):
-        raise ValueError("The two sequences must have the same length.")
 
 def validate_dtw(
         seq1: list[tuple[float, float]],
@@ -187,23 +168,27 @@ def validate_erp(
     validate_scalar(g, "gap constant (g)")
 
 def validate_euclidean(
-        p: list[float],
-        q: list[float]
+        p: list[tuple[float, float]],
+        q: list[tuple[float, float]]
     ):
     """
-    Validate parameters for Euclidean distance calculation between two numeric
-    lists.
+    Validate parameters for Euclidean distance calculation between two
+    trajectories.
 
-    :param p: First numeric list.
-    :type p: list[float]
-    :param q: Second numeric list.
-    :type q: list[float]
+    :param p: First trajectory.
+    :type p: list[tuple[float, float]]
+    :param q: Second trajectory.
+    :type q: list[tuple[float, float]]
     
     :raises ValueError:
-        - if `p` or `q` is not a numeric list
+        - if `p` or `q` is not a valid trajectory
         - if `p` and `q` do not have the same length
     """
-    validate_distance_parameters(p, q)
+    validate_trajectory(p)
+    validate_trajectory(q)
+
+    if len(p) != len(q):
+        raise ValueError("The two sequences must have the same length.")
 
 def validate_frechet(p: list[float], q: list[float]):
     """
