@@ -2,7 +2,10 @@
 #define DISTANCE_H
 
 #include <stddef.h>
+#include <math.h>
 
-double distance(const double *p, const double *q, size_t size);
+#include "trajectory.h"
+
+double distance(const Trajectory *p, const Trajectory *q);
 
 #endif

@@ -8,7 +8,10 @@ OBJFLAGS = -c -o
 all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so
 
 libeuclidean.so:
+	$(CC) $(CFLAGS) $(POSFLAGS) src/trajectory.c $(OBJFLAGS) trajectory.pic.o
+	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
+	$(CC) $(LDFLAGS) euclidean.pic.o frechet.pic.o -o $@
 
 libfrechet.so:
 	$(CC) $(CFLAGS) $(POSFLAGS) src/euclidean.c $(OBJFLAGS) euclidean.pic.o
