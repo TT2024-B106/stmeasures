@@ -4,7 +4,6 @@ import ctypes
 
 from stmeasures.validation import validate_euclidean
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point
 
 class Euclidean(BaseAlgorithm):
     """
@@ -34,24 +33,17 @@ class Euclidean(BaseAlgorithm):
         """
         super().__init__(libname)
 
-        self.lib.distance.argtypes = [ctypes.POINTER(Trajectory), ctypes.POINTER(Trajectory)]
-        self.lib.distance.restype = ctypes.c_double
-
-    def distance(
-            self,
-            p: list[tuple[float, float]],
-            q: list[tuple[float, float]]
-        ) -> float:
+    def distance(self, p: list[float], q: list[float]) -> float:
         """
         Calculates the Euclidean distance between two trajectories.
 
         :param p:
             The first vector in Euclidean n-space.
-        :type p: list[tuple[float, float]
+        :type p: list[float]
 
         :param q:
             The second vector in Euclidean n-space.
-        :type q: list[tuple[float, float]
+        :type q: list[float]
 
         :return: The Euclidean distance between the two input vectors.
         :rtype: float
@@ -72,20 +64,19 @@ class Euclidean(BaseAlgorithm):
             2.8284271247461903
         """
         try:
+            len_p = len(p)
+
             validate_euclidean(p, q)
 
-            _len = len(p)
+            doublearray = ctypes.c_double * len_p
+            self.lib.distance.argtypes = [
+                doublearray,
+                doublearray,
+                ctypes.c_size_t,
+            ]
+            self.lib.distance.restype = ctypes.c_double
 
-            points_p = (Point * _len)(*[Point(lat, lon) for lat, lon in p])
-            points_q = (Point * _len)(*[Point(lat, lon) for lat, lon in q])
-
-            trajectory_p = Trajectory(points_p, _len)
-            trajectory_q = Trajectory(points_q, _len)
-
-            return self.lib.distance(
-                ctypes.byref(trajectory_p),
-                ctypes.byref(trajectory_q)
-            )
+            return self.lib.distance(doublearray(*p), doublearray(*q), len_p)
         except ValueError as ve:
             print(ve)
             raise RuntimeError(
