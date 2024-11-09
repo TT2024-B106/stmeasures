@@ -11,4 +11,4 @@ def test_lib(euclidean):
 
 def test_basic(euclidean):
     approx_val = 2.8284271247461903
-    assert euclidean.distance([1, 2], [3, 4]) == pytest.approx(approx_val)
+    assert euclidean.distance([(1, 2)], [(3, 4)]) == pytest.approx(approx_val)
