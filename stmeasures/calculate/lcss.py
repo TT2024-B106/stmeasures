@@ -3,7 +3,6 @@
 import ctypes
 
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point
 
 class LCSS(BaseAlgorithm):
     """A LCSS instance that mainly computes the Longest Common Subsequences
@@ -26,16 +25,10 @@ class LCSS(BaseAlgorithm):
     def __init__(self, libname="liblcss") -> None:
         super().__init__(libname)
 
-        self.lib.distance.argtypes = [
-            ctypes.POINTER(Trajectory),
-            ctypes.POINTER(Trajectory)
-        ]
-        self.lib.distance.restype = ctypes.c_double
-
     def distance(
             self,
-            r: list[tuple[float, float]],
-            s: list[tuple[float, float]],
+            r: list[float],
+            s: list[float],
             sigma: float = 1
         ) -> float:
         """Return the LCSS distance between two trajectories.
@@ -53,14 +46,22 @@ class LCSS(BaseAlgorithm):
 
         # TODO: Validate in `validate` module
 
-        points_r = (Point * len_r)(*[Point(lat, lon) for lat, lon in r])
-        points_s = (Point * len_s)(*[Point(lat, lon) for lat, lon in s])
+        r_array = ctypes.c_double * len_r
+        s_array = ctypes.c_double * len_s
 
-        trajectory_r = Trajectory(points_r, len_r)
-        trajectory_s = Trajectory(points_s, len_s)
+        self.lib.distance.argtypes = [
+            r_array,
+            s_array,
+            ctypes.c_size_t,
+            ctypes.c_size_t,
+            ctypes.c_double,
+        ]
+        self.lib.distance.restype = ctypes.c_double
 
         return self.lib.distance(
-            ctypes.byref(trajectory_r),
-            ctypes.byref(trajectory_s),
+            r_array(*r),
+            s_array(*s),
+            len_r,
+            len_s,
             sigma
         )

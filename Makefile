@@ -29,11 +29,7 @@ libeditdist.so:
 	rm *.pic.o
 
 liblcss.so:
-	$(CC) $(CFLAGS) $(POSFLAGS) src/trajectory.c $(OBJFLAGS) trajectory.pic.o
-	$(CC) $(CFLAGS) $(POSFLAGS) src/matrix.c $(OBJFLAGS) matrix.pic.o
-	$(CC) $(CFLAGS) $(POSFLAGS) src/lcss.c $(OBJFLAGS) lcss.pic.o
-	$(CC) $(LDFLAGS) trajectory.pic.o matrix.pic.o lcss.pic.o -o $@
-	rm *.pic.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/lcss.c
 
 librdp.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/rdp.c	
