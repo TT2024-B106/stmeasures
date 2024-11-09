@@ -5,7 +5,6 @@ build-backend = "hatchling.build"
 [project]
 name = "stmeasures"
 dynamic = ["version"]
-#TODO: Add the dependencies the project will need
 requires-python = ">= 3.8"
 authors = [
   {name = "Eduardo Mendoza", email = "emendozam1501@alumno.ipn.mx"},
@@ -36,21 +35,6 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering :: GIS",
 ]
-dependencies = [
-  "contourpy",
-  "cycler",
-  "fonttools",
-  "kiwisolver",
-  "matplotlib",
-  "numpy",
-  "packaging",
-  "pillow",
-  "pyparsing",
-  "python-dateutil",
-  "six"
-]
-
-#TODO: Add optional dependencies through `project.optional` (if needed)
 
 [project.urls]
 #TODO: Add readthedocs link for `Documentation`
