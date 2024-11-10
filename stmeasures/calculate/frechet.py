@@ -1,5 +1,11 @@
+"""Frechet algorithm class."""
+
 import ctypes
+import warnings
+
+from stmeasures.validation import validate_frechet, validate_trajectory # TODO
 from stmeasures.calculate.base import BaseAlgorithm
+from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
 
 class Frechet(BaseAlgorithm):
     """A Frechet instance that computes the Frechet distance
@@ -23,7 +29,17 @@ class Frechet(BaseAlgorithm):
         """Initialize the Frechet instance and load the shared library."""
         super().__init__(libname)
 
-    def distance(self, p: list[float], q: list[float]) -> float:
+    def distance(
+            self,
+            p: list[tuple[float, float]],
+            q: list[tuple[float, float]]
+        ) -> float:
+        return self._distance(
+            [p_value for _tuple in p for p_value in _tuple],
+            [q_value for _tuple in q for q_value in _tuple]
+        )
+
+    def _distance(self, p: list[float], q: list[float]) -> float:
         """Return the Frechet distance between two trajectories.
 
         Parameters
@@ -33,6 +49,9 @@ class Frechet(BaseAlgorithm):
         q : list[float]
             A second vector in n-space
         """
+        warnings.warn('Method not using cstructures', DeprecationWarning)
+        warnings.warn('Args not validating')
+
         len_p = len(p)
         len_q = len(q)
 

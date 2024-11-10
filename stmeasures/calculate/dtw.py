@@ -1,4 +1,9 @@
+"""DTW algorithm class."""
+
 import ctypes
+import warnings
+
+from stmeasures.validation import validate_dtw
 from stmeasures.calculate.base import BaseAlgorithm
 from stmeasures.objects.cstructures import Trajectory, Point
 
@@ -48,6 +53,7 @@ class DTW(BaseAlgorithm):
         float
             The DTW distance between the two sequences of coordinates.
         """
+        warnings.warn('Args not validating')
 
         seq1_points = (Point * len(seq1))(*[Point(lat, lon) for lat, lon in seq1])
         seq2_points = (Point * len(seq2))(*[Point(lat, lon) for lat, lon in seq2])
