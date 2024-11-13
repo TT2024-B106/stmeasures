@@ -1,5 +1,4 @@
 # stmeasures/abstractions/geojson.py
-import stmeasures.calculate.euclidean as euclidean
 
 class GeoJSON:
     """
