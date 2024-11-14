@@ -2,7 +2,7 @@
 
 import ctypes
 
-from stmeasures import _libpath
+from stmeasures.calculate import _libpath
 
 class BaseAlgorithm():
     """Base class for distance calculation algorithms.
