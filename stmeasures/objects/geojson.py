@@ -1,4 +1,4 @@
-# stmeasures/abstractions/geojson.py
+"""GeoJSON class."""
 
 class GeoJSON:
     """
