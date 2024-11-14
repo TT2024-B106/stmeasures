@@ -1,4 +1,4 @@
-# stmeasures/visualize.py
+"""Visualize module."""
 
 def swap_coordinates(coords):
     """
