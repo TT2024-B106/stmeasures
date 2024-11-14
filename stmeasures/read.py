@@ -3,7 +3,7 @@
 import json
 from stmeasures.objects.geojson import GeoJSON
 
-def file(filepath: str) -> GeoJSON:
+def read_file(filepath: str) -> GeoJSON:
     """
     Reads a GeoJSON file and returns a `GeoJSON` object.
 

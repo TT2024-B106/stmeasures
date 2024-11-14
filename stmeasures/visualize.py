@@ -1,6 +1,6 @@
 """Visualize module."""
 
-def swap_coordinates(coords):
+def _swap_coordinates(coords):
     """
     Swap latitude and longitude for each coordinate tuple in a trajectory.
 
@@ -16,7 +16,7 @@ def swap_coordinates(coords):
     """
     return [[lon, lat] for lat, lon in coords]
 
-def geojsonio_trajectory(trajectory_data):
+def get_geojsonio_trajectory(trajectory_data):
     """
     Convert a single trajectory to a GeoJSON LineString format.
 
@@ -31,11 +31,11 @@ def geojsonio_trajectory(trajectory_data):
     """
     geojson = {
         "type": "LineString",
-        "coordinates": swap_coordinates(trajectory_data['coordinates'])
+        "coordinates": _swap_coordinates(trajectory_data['coordinates'])
     }
     return geojson
 
-def trajectories(geojson_obj):
+def get_geojson_trajectories(geojson_obj):
     """
     Convert all trajectories to GeoJSON FeatureCollection format.
 
