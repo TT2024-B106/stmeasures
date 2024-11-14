@@ -1,6 +1,7 @@
-# stmeasures/read.py
+"""Read module."""
+
 import json
-from stmeasures.objects.abstractions import GeoJSON
+from stmeasures.objects.geojson import GeoJSON
 
 def file(filepath: str) -> GeoJSON:
     """
