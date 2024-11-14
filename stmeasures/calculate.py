@@ -1,4 +1,4 @@
-"""Calculator module for various distance algorithms."""
+"""Calculate module for various distance algorithms."""
 
 from typing import Dict as _Dict
 from typing import Optional as _Optional
