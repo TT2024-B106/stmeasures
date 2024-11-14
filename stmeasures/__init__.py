@@ -1,3 +1,3 @@
 """Similar Trajectories Measurements."""
 
-from stmeasures.calculate import *
+from stmeasures.calculates import *
