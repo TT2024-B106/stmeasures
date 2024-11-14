@@ -20,8 +20,27 @@ class GeoJSON:
         :param data: Raw GeoJSON data to be processed into trajectory data.
         :type data: list[dict]
         """
-        self.data = data
-        self.trajectories = self._extract_trajectories()
+        self._data = data
+        self._trajectories = self._extract_trajectories()
+
+    @property
+    def data(self):
+        return self._data
+
+    @property
+    def trajectories(self):
+        return self._trajectories
+
+    @property
+    def trajectories_list(self) -> list[list[tuple[float, float]]]:
+        """Returns trajectories as a list of trajectories."""
+        return [
+            [tuple(coordinates) for coordinates in trajectory['coordinates']]
+            for trajectory in self.trajectories
+        ]
+
+    def __getitem__(self, index):
+        return self.trajectories_list[index]
 
     def _extract_trajectories(self):
         """
@@ -36,7 +55,7 @@ class GeoJSON:
         :rtype: list[dict]
         """
         trajectories = []
-        for item in self.data:
+        for item in self._data:
             features = item.get('features', [])
             for feature in features:
                 if feature['geometry']['type'] == 'LineString':
