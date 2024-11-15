@@ -38,7 +38,7 @@ def simplify(trajectory, tolerance):
     """
     return _rdp.simplify(trajectory, tolerance)
 
-def distance(a, b, normalize=False):
+def distance(a, b, algorithm=Algorithms.EUCLIDEAN):
     """
     Compute multiple distance metrics between trajectories.
 
@@ -55,21 +55,22 @@ def distance(a, b, normalize=False):
         The computed distance if `normalize` is False, or the normalized
         minimum distance if True.
     """
-    results: _Dict[str, float] = dict()
+    if algorithm == Algorithms.EUCLIDEAN:
+        return _euclidean.distance(a, b)
+    elif algorithm == Algorithms.DTW:
+        return _dtw.distance(a, b)
+    elif algorithm == Algorithms.LCSS:
+        return _lcss.distance(a, b)
+    elif algorithm == Algorithms.FRECHET:
+        return _frechet.distance(a, b)
+    elif algorithm == Algorithms.HAUSDORFF:
+        return _hausdorff.distance(a, b)
+    elif algorithm == Algorithms.ERS:
+        return _editdistance.ers(a, b)
+    elif algorithm == Algorithms.ERP:
+        return _editdistance.erp(a, b)
 
-    results[Algorithms.EUCLIDEAN] = _euclidean.distance(a, b)
-
-    if not normalize:
-        return results[Algorithms.EUCLIDEAN]
-
-    results[Algorithms.DTW] = _dtw.distance(a, b)
-    results[Algorithms.LCSS] = _lcss.distance(a, b)
-    results[Algorithms.FRECHET] = _frechet.distance(a, b)
-    results[Algorithms.HAUSDORFF] = _hausdorff.distance(a, b)
-    results[Algorithms.ERS] = _editdistance.ers(a, b)
-    results[Algorithms.ERP] = _editdistance.erp(a, b)
-
-    return min(-1, list(results.values()))  # TODO: normalize.all(results)
+    return ValueError(f"Algorithm {algorithm} not supported.")
 
 def distance_spatial(
         a: list[tuple[float, float]],
