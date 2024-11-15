@@ -1,6 +1,7 @@
 """Visualize module."""
 
 import json
+from warnings import warn as _warn
 
 def _swap_coordinates(coords):
     """
@@ -99,6 +100,8 @@ def get_geojsonio_trajectory(trajectory_data):
     :return: GeoJSON dictionary for the trajectory in LineString format.
     :rtype: dict
     """
+    _warn("Use get_geojsonio_contents instead.")
+
     geojson = {
         "type": "LineString",
         "coordinates": _swap_coordinates(trajectory_data['coordinates'])
@@ -119,6 +122,8 @@ def get_geojson_trajectories(geojson_obj):
     :return: GeoJSON FeatureCollection for all trajectories.
     :rtype: dict
     """
+    _warn("Use get_geojsonio_contents instead.")
+
     geojson = {
         "type": "FeatureCollection",
         "features": []
