@@ -1,5 +1,7 @@
 """Visualize module."""
 
+import json
+
 def _swap_coordinates(coords):
     """
     Swap latitude and longitude for each coordinate tuple in a trajectory.
@@ -15,6 +17,74 @@ def _swap_coordinates(coords):
     :rtype: list[list[float, float]]
     """
     return [[lon, lat] for lat, lon in coords]
+
+def get_geojsonio_contents(**kwargs) -> str:
+    """
+    Generate a GeoJSON string for visualization with geojson.io from input trajectory data.
+
+    :param kwargs: Keyword arguments to specify trajectory data. Must include one of the following:
+    
+        - `trajectories` (list): A list of trajectories, where each trajectory is a list of 
+          coordinates (each coordinate is a 2-element list of floats).
+          
+        - `trajectory` (list): A single trajectory, represented as a list of coordinates 
+          (each coordinate is a tuple of two floats).
+    
+    :type kwargs: dict
+    :return: A GeoJSON string formatted as either a FeatureCollection (for multiple trajectories) 
+             or a LineString (for a single trajectory).
+    :rtype: str
+
+    :raises ValueError: If no arguments are provided or if the provided arguments do not 
+                        match the expected format.
+
+    **Examples**
+
+    .. code-block:: python
+
+        get_geojsonio_contents(
+            trajectories=[[[19.603914, -99.01801], [19.60482, -99.016198]]]
+        )
+        # Output:
+        # '{"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": 
+        # {"type": "LineString", "coordinates": [[-99.01801, 19.603914], [-99.016198, 
+        # 19.60482]]}, "properties": {}}]}'
+
+        get_geojsonio_contents(
+            trajectory=[(19.603914, -99.01801), (19.60482, -99.016198)]
+        )
+        # Output:
+        # '{"type": "LineString", "coordinates": [[-99.01801, 19.603914], [-99.016198, 
+        # 19.60482]]}'
+
+    .. note::
+        This function expects coordinates to be in the format [latitude, longitude] for 
+        `trajectories` or (latitude, longitude) for `trajectory`. The `_swap_coordinates` 
+        helper function is used to adjust coordinates to the required [longitude, latitude] 
+        order for GeoJSON output.
+    """
+    if not kwargs:
+        raise ValueError("No argument provided")
+
+    trajectories = kwargs.get("trajectories") or [kwargs.get("trajectory") or None]
+
+    if isinstance(trajectories, list) and isinstance(trajectories[0], list):
+        return json.dumps({
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": _swap_coordinates(trajectory)
+                    },
+                    "properties": {}
+                }
+                for trajectory in trajectories
+            ]
+        })
+
+    raise ValueError("No valid argument provided")
 
 def get_geojsonio_trajectory(trajectory_data):
     """
