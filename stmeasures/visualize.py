@@ -1,6 +1,7 @@
 """Visualize module."""
 
 import json
+import random
 from warnings import warn as _warn
 
 def _swap_coordinates(coords):
@@ -19,7 +20,17 @@ def _swap_coordinates(coords):
     """
     return [[lon, lat] for lat, lon in coords]
 
-def get_geojsonio_contents(**kwargs) -> str:
+def _random_color() -> str:
+    """
+    Generates a random color in hexadecimal format.
+
+    :return: A string representing a random color in the format `#RRGGBB`.
+    :rtype: str
+    """
+    import random
+    return "#{:06x}".format(random.randint(0, 0xFFFFFF))
+
+def geojsonio_contents(**kwargs) -> str:
     """
     Generate a GeoJSON string for visualization with geojson.io from input trajectory data.
 
@@ -70,6 +81,10 @@ def get_geojsonio_contents(**kwargs) -> str:
     trajectories = kwargs.get("trajectories") or [kwargs.get("trajectory") or None]
 
     if isinstance(trajectories, list) and isinstance(trajectories[0], list):
+        dt = [-1 for _ in trajectories]
+        indexes = kwargs.get("indexes") or []
+        indexes = indexes if len(indexes) == len(trajectories) else dt
+
         return json.dumps({
             "type": "FeatureCollection",
             "features": [
@@ -77,11 +92,16 @@ def get_geojsonio_contents(**kwargs) -> str:
                     "type": "Feature",
                     "geometry": {
                         "type": "LineString",
-                        "coordinates": _swap_coordinates(trajectory)
+                        "coordinates": _swap_coordinates(trajectories[i])
                     },
-                    "properties": {}
+                    "properties": {
+                        "index": indexes[i],
+                        "stroke": _random_color(),
+                        "stroke-width": 2,
+                        "stroke-opacity": 1
+                    }
                 }
-                for trajectory in trajectories
+                for i in range(len(trajectories))
             ]
         })
 
