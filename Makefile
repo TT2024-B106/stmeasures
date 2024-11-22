@@ -5,7 +5,7 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so sad.so
+all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so libsad.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
