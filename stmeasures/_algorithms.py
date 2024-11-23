@@ -56,10 +56,12 @@ class Algorithms(str, _Enum):
     HAUSDORFF = "hausdorff"
     ERS = "edit_distance_real_sequence"
     ERP = "edit_distance_real_penalty"
+    AMSS = "angular_metric_shape_similarity"
+    SAD = "spatial_assembling_distance"
 
     SEQUENTIAL = [ERP, ERS, LCSS]
     TEMPORAL = [DTW, *SEQUENTIAL]
-    GEOMETRICAL = [HAUSDORFF, FRECHET]
+    GEOMETRICAL = [HAUSDORFF, FRECHET, AMSS, SAD]
     SPATIAL = [EUCLIDEAN, *GEOMETRICAL]
 
     def __str__(self) -> str:

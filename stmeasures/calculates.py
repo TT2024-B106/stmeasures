@@ -10,6 +10,9 @@ import stmeasures.calculate.frechet as _scfr
 import stmeasures.calculate.hausdorff as _scha
 import stmeasures.calculate.editdistance as _sced
 import stmeasures.calculate.euclidean as _sceu
+import stmeasures.calculate.amss as _scam
+import stmeasures.calculate.sad as _scsa
+
 from stmeasures._algorithms import Algorithms
 
 _rdp = _scrd.RDP()
@@ -19,6 +22,8 @@ _frechet = _scfr.Frechet()
 _hausdorff = _scha.Hausdorff()
 _editdistance = _sced.EditDistance()
 _euclidean = _sceu.Euclidean()
+_amss = _scam.AMSS()
+_sad = _scsa.SAD()
 
 def simplify(trajectory, tolerance):
     """
@@ -69,6 +74,10 @@ def distance(a, b, algorithm=Algorithms.EUCLIDEAN):
         return _editdistance.ers(a, b)
     elif algorithm == Algorithms.ERP:
         return _editdistance.erp(a, b)
+    elif algorithm == Algorithms.AMSS:
+        return _amss.distance(a, b)
+    elif algorithm == Algorithms.SAD:
+        return _sad.distance(a, b)
 
     return ValueError(f"Algorithm {algorithm} not supported.")
 
