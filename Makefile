@@ -5,7 +5,7 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so
+all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so libamss.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
@@ -41,6 +41,9 @@ libdtw.so:
 	$(CC) $(CFLAGS) $(POSFLAGS) src/dtw.c $(OBJFLAGS) dtw.pic.o
 	$(CC) $(LDFLAGS) trajectory.pic.o matrix.pic.o euclidean.pic.o dtw.pic.o -o $@
 	rm *.pic.o
+
+libamss.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/amss.c
 
 clean:
 	rm -f *.so *.o
