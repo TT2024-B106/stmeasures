@@ -2,7 +2,11 @@ import pathlib
 import sys
 
 project_root = pathlib.Path(__file__).parents[2].resolve()
-sys.path.insert(0, str(project_root))
+libdir = project_root / "stmeasures"
+calculatemod = libdir / "calculate"
+
+sys.path.insert(0, str(libdir))
+sys.path.insert(0, str(calculatemod))
 
 project = 'stmeasures'
 copyright = '2024, TT2024-B106'
