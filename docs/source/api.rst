@@ -1,5 +1,3 @@
-.. currentmodule:: stmeasures
-
 Library API
 ===========
 

@@ -1,11 +1,9 @@
-.. currentmodule:: stmeasures
-
 Classes
 =======
 
 Calculate Module
 ----------------
 
-.. autoclass:: calculate.base::BaseAlgorithm
+.. autoclass:: base::BaseAlgorithm
 
-.. autoclass:: calculate.euclidean::Euclidean
+.. autoclass:: euclidean::Euclidean
