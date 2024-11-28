@@ -2,9 +2,7 @@ import pathlib
 import sys
 
 project_root = pathlib.Path(__file__).parents[2].resolve()
-library_dir = project_root / "stmeasures"
-
-sys.path.insert(0, str(library_dir))
+sys.path.insert(0, str(project_root))
 
 project = 'stmeasures'
 copyright = '2024, TT2024-B106'
