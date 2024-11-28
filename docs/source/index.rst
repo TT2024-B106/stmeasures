@@ -1,5 +1,3 @@
-.. module:: stmeasures
-
 ======================================================
 `stmeasures` — Measure similarity between trajectories
 ======================================================
@@ -21,3 +19,4 @@ Contents
 
    api
    classes
+   modules
