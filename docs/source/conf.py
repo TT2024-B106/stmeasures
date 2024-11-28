@@ -1,3 +1,11 @@
+import pathlib
+import sys
+
+project_root = pathlib.Path(__file__).parents[2].resolve()
+libdir = project_root / "stmeasures"
+
+sys.path.insert(0, str(libdir))
+
 project = 'stmeasures'
 copyright = '2024, TT2024-B106'
 author = 'TT2024-B106'
