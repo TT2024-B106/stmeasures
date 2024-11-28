@@ -4,6 +4,6 @@ Classes
 Calculate Module
 ----------------
 
-.. autoclass:: base::BaseAlgorithm
+.. autoclass:: calculate.base::BaseAlgorithm
 
-.. autoclass:: euclidean::Euclidean
+.. autoclass:: calculate.euclidean::Euclidean
