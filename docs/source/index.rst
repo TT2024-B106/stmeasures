@@ -1,5 +1,3 @@
-.. module:: stmeasures
-
 ======================================================
 `stmeasures` — Measure similarity between trajectories
 ======================================================
@@ -20,3 +18,5 @@ Contents
 .. toctree::
 
    api
+   classes
+   modules
