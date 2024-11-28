@@ -32,9 +32,3 @@ Validation Module
 
 .. autofunction:: validation.validate_rdp
 
-Calculate Module
-----------------
-
-.. autoclass:: calculate.base::BaseAlgorithm
-
-.. autoclass:: calculate.euclidean::Euclidean
