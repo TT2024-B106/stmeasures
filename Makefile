@@ -5,7 +5,7 @@ LDFLAGS = -shared
 POSFLAGS = -O -g
 OBJFLAGS = -c -o
 
-all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so
+all: libeuclidean.so libmanhattan.so libeditdist.so liblcss.so libfrechet.so libhausdorff.so libdtw.so librdp.so libsad.so
 
 libeuclidean.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/euclidean.c
@@ -18,6 +18,9 @@ libfrechet.so:
 
 libhausdorff.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/hausdorff.c
+	
+libsad.so:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/sad.c
 
 libmanhattan.so:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ src/manhattan.c
