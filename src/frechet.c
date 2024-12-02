@@ -8,6 +8,9 @@ void point_to_array(const Point *p, double *arr) {
 
 // Helper function to initialize a 2D cache matrix
 double **initialize_cache(int m, int n) {
+    if (m == 0 || n == 0) {
+        return NULL;
+    }
     double **cache = (double **)malloc(m * sizeof(double *));
     if (!cache) {
         return NULL;
@@ -46,7 +49,8 @@ double frechet_execute(const Trajectory *seq1, const Trajectory *seq2) {
         return -1.0; // Memory allocation failed
     }
 
-    double p_arr[2], q_arr[2];
+    double p_arr[2] = {0.0, 0.0};
+    double q_arr[2] = {0.0, 0.0};
 
     // Fill the cache iteratively
     for (int i = 0; i < m; i++) {
@@ -69,8 +73,11 @@ double frechet_execute(const Trajectory *seq1, const Trajectory *seq2) {
         }
     }
 
-    double result = cache[m - 1][n - 1];
-
-    free_cache(cache, m);
-    return result;
+    if (cache != NULL) {
+        double result = cache[m - 1][n - 1];
+        free_cache(cache, m);
+        return result;
+    } else {
+        return -1.0; // Handle the error appropriately
+    }
 }

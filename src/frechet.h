@@ -14,4 +14,4 @@ double frechet_execute(const Trajectory *seq1, const Trajectory *seq2);
 double **initialize_cache(int m, int n); // Initializes the dynamic programming cache
 void free_cache(double **cache, int m);  // Frees the allocated cache memory
 
-#endif
+#endif // FRECHET_H
