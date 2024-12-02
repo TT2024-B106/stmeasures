@@ -1,11 +1,9 @@
-"""Hausdorff algorithm class."""
-
 import ctypes
 import warnings
 
-from stmeasures.validation import validate_hausdorff, validate_trajectory # TODO
+#from stmeasures.validation import validate_hausdorff, validate_trajectory
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
+from stmeasures.objects.cstructures import Trajectory, Point
 
 class Hausdorff(BaseAlgorithm):
     """A Hausdorff instance that computes the Hausdorff distance
@@ -13,67 +11,55 @@ class Hausdorff(BaseAlgorithm):
 
     Parameters
     ----------
-    libname : str, default: "libhausdorff"
-        The file name of the compiled shared library.
+    libname : str, optional
+        The file name of the compiled shared library. Defaults to "libhausdorff".
 
     Examples
     --------
     Calculating the Hausdorff distance between Point 1 (1, 2) and Point 2 (3, 4)
 
     >>> hausdorff = Hausdorff()  # Initializes object and loads shared library
-    >>> hausdorff.distance([1, 2], [3, 4])
-    2.0
+    >>> hausdorff.distance([(1, 2)], [(3, 4)])
+    314.395
     """
 
     def __init__(self, libname="libhausdorff") -> None:
         """Initialize the Hausdorff instance and load the shared library."""
         super().__init__(libname)
 
+        self.lib.hausdorff_execute.argtypes = [ctypes.POINTER(Trajectory), ctypes.POINTER(Trajectory)]
+        self.lib.hausdorff_execute.restype = ctypes.c_double
+
+
     def distance(
             self,
             p: list[tuple[float, float]],
             q: list[tuple[float, float]]
         ) -> float:
-        return self._distance(
-            [p_value for _tuple in p for p_value in _tuple],
-            [q_value for _tuple in q for q_value in _tuple]
-        )
-
-    def _distance(self, p: list[float], q: list[float]) -> float:
-        """Return the Hausdorff distance between two trajectories.
+        """Calculate the Hausdorff distance between two trajectories.
 
         Parameters
         ----------
-        p : list[float]
-            A first vector in n-space
-        q : list[float]
-            A second vector in n-space
-        """
-        warnings.warn('Method not using cstructures', DeprecationWarning)
+        p : list of tuple of float
+            The first sequence of (latitude, longitude) tuples.
+        q : list of tuple of float
+            The second sequence of (latitude, longitude) tuples.
+
+        Returns
+        -------
+        float
+            The Hausdorff distance between the two trajectories.
+         """
         warnings.warn('Args not validating')
+        # # Validate the input trajectories
+        # if not validate_trajectory(p) or not validate_trajectory(q):
+        #     raise ValueError("Invalid trajectories provided for Hausdorff distance calculation.")
+        
+        # Convert the input lists to Trajectory objects
+        seq1_points = (Point * len(p))(*[Point(lat, lon) for lat, lon in p])
+        seq2_points = (Point * len(q))(*[Point(lat, lon) for lat, lon in q])
 
-        len_p = len(p)
-        len_q = len(q)
+        p_c = Trajectory(seq1_points, len(p))
+        q_c = Trajectory(seq2_points, len(q))
 
-        # TODO: Validate in `validate` module
-
-        # Define the array types for `p` and `q`
-        doublearray_p = ctypes.c_double * len_p
-        doublearray_q = ctypes.c_double * len_q
-
-        # Set argument and return types for the C function
-        self.lib.hausdorff_distance.argtypes = [
-            doublearray_p,  # Array of doubles for `p`
-            doublearray_q,  # Array of doubles for `q`
-            ctypes.c_size_t,  # Size of `p`
-            ctypes.c_size_t   # Size of `q`
-        ]
-        self.lib.hausdorff_distance.restype = ctypes.c_double
-
-        # Call the C function and return the result
-        return self.lib.hausdorff_distance(
-            doublearray_p(*p),
-            doublearray_q(*q),
-            len_p,
-            len_q
-        )
+        return self.lib.hausdorff_execute(ctypes.byref(p_c), ctypes.byref(q_c))
