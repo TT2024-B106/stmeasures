@@ -1,18 +1,11 @@
 #ifndef HAUSDORFF_H
 #define HAUSDORFF_H
 
-#include <stdio.h>
+#include <stddef.h>
 #include <math.h>
 #include <float.h>
-#include "trajectory.h"  // For the Trajectory structure
+#include <stdlib.h>
 
-// Earth's radius in kilometers
-#define EARTH_RADIUS_KM 6371.0
+double hausdorff_distance(const double *p, const double *q, size_t p_size, size_t q_size);
 
-// Function to calculate the Haversine distance between two points
-double haversine_distance(Point p1, Point p2);
-
-// Function to calculate the Hausdorff distance between two trajectories
-double hausdorff_execute(Trajectory* traj1, Trajectory* traj2);
-
-#endif // HAUSDORFF_H
+#endif

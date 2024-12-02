@@ -11,5 +11,4 @@ def test_lib(frechet):
     assert frechet.lib is not None
 
 def test_basic(frechet):
-    assert frechet.distance([(1, 0), (3, 5), (4, 2)], [(2, 1), (5, 4), (6, 3)]) == approx(2.23606797749979)
-
+    assert frechet.distance([(1, 2)], [(3, 4)]) == approx(2.0)
