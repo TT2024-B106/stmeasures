@@ -1,11 +1,9 @@
-"""Frechet algorithm class."""
-
 import ctypes
 import warnings
 
-from stmeasures.validation import validate_frechet, validate_trajectory # TODO
+#from stmeasures.validation import validate_frechet, validate_trajectory
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
+from stmeasures.objects.cstructures import Trajectory, Point
 
 class Frechet(BaseAlgorithm):
     """A Frechet instance that computes the Frechet distance
@@ -22,58 +20,47 @@ class Frechet(BaseAlgorithm):
 
     >>> frechet = Frechet()  # Initializes object and loads shared library
     >>> frechet.distance([1, 2], [3, 4])
-    2.0
+    2.828
     """
 
     def __init__(self, libname="libfrechet") -> None:
         """Initialize the Frechet instance and load the shared library."""
         super().__init__(libname)
 
+        self.lib.frechet_execute.argtypes = [ctypes.POINTER(Trajectory), ctypes.POINTER(Trajectory)]
+        self.lib.frechet_execute.restype = ctypes.c_double
+
     def distance(
             self,
             p: list[tuple[float, float]],
             q: list[tuple[float, float]]
         ) -> float:
-        return self._distance(
-            [p_value for _tuple in p for p_value in _tuple],
-            [q_value for _tuple in q for q_value in _tuple]
-        )
-
-    def _distance(self, p: list[float], q: list[float]) -> float:
-        """Return the Frechet distance between two trajectories.
+        """Calculate the Frechet distance between two trajectories.
 
         Parameters
         ----------
-        p : list[float]
-            A first vector in n-space
-        q : list[float]
-            A second vector in n-space
+        seq1 : list of tuple of float
+            The first sequence of (latitude, longitude) tuples.
+        seq2 : list of tuple of float
+            The second sequence of (latitude, longitude) tuples.
+
+        Returns
+        -------
+        float
+            The Frechet distance between the two trajectories.
         """
-        warnings.warn('Method not using cstructures', DeprecationWarning)
         warnings.warn('Args not validating')
+        #  # Validate the input trajectories
+        # if not validate_frechet(p, q):
+        #     raise ValueError("Invalid trajectories provided for Frechet distance calculation.")
 
-        len_p = len(p)
-        len_q = len(q)
 
-        # TODO: Validate in `validate` module
+        # Convert the input lists to Trajectory objects
+        seq1_points = (Point * len(p))(*[Point(lat, lon) for lat, lon in p])
+        seq2_points = (Point * len(q))(*[Point(lat, lon) for lat, lon in q])
 
-        # Define the array types for `p` and `q`
-        doublearray_p = ctypes.c_double * len_p
-        doublearray_q = ctypes.c_double * len_q
+        p_c = Trajectory(seq1_points, len(p))
+        q_c = Trajectory(seq2_points, len(q))
 
-        # Set argument and return types for the C function
-        self.lib.frechet_distance.argtypes = [
-            doublearray_p,  # Array of doubles for `p`
-            doublearray_q,  # Array of doubles for `q`
-            ctypes.c_size_t,  # Size of `p`
-            ctypes.c_size_t   # Size of `q`
-        ]
-        self.lib.frechet_distance.restype = ctypes.c_double
+        return self.lib.frechet_execute(ctypes.byref(p_c), ctypes.byref(q_c))
 
-        # Call the C function and return the result
-        return self.lib.frechet_distance(
-            doublearray_p(*p),
-            doublearray_q(*q),
-            len_p,
-            len_q
-        )
