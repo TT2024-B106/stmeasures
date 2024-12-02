@@ -1,17 +1,14 @@
 #ifndef FRECHET_H
 #define FRECHET_H
 
-#include "trajectory.h"  // For the Trajectory structure
-#include "euclidean.h"   // For the Euclidean distance function
-#include <float.h>       // For DBL_MAX
-#include <math.h>        // For math functions like sqrt, pow, fmin, fmax
-#include <stdlib.h>      // For memory allocation functions
+#include <stddef.h>
+#include <math.h>
+#include <float.h>
+#include <stdlib.h>
 
-// Main function to compute the Fréchet distance
-double frechet_execute(const Trajectory *seq1, const Trajectory *seq2);
+#include "euclidean.h"
 
-// Helper functions for internal use (if needed externally, they can be exposed here too)
-double **initialize_cache(int m, int n); // Initializes the dynamic programming cache
-void free_cache(double **cache, int m);  // Frees the allocated cache memory
+double frechet_distance_rec(const double *p, const double *q, size_t i, size_t j, double **cache, size_t size);
+double frechet_distance(const double *p, const double *q, size_t p_size, size_t q_size);
 
 #endif
