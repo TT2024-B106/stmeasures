@@ -34,7 +34,8 @@ class EditDistance(BaseAlgorithm):
         cost_deletion: float = 1.0,
         cost_insertion: float = 1.0,
         subcost_within_sigma: float = 0.0,
-        subcost_outside_sigma: float = 1.0
+        subcost_outside_sigma: float = 1.0,
+        validate: bool = False
     ) -> float:
         """
         Calculate the Edit Distance on Real Sequences (ERS).
@@ -61,8 +62,11 @@ class EditDistance(BaseAlgorithm):
         :rtype: float
         """
         try:
-            validate_trajectory(r)
-            validate_trajectory(s)
+            if validate:
+                validate_trajectory(r)
+                validate_trajectory(s)
+            else:
+                warnings.warn("Args not validating", ResourceWarning)
 
             _r = [r_value for _tuple in r for r_value in _tuple]
             _s = [s_value for _tuple in s for s_value in _tuple]
@@ -106,7 +110,8 @@ class EditDistance(BaseAlgorithm):
         self,
         r: list[tuple[float, float]],
         s: list[tuple[float, float]],
-        g: float = 0.0
+        g: float = 0.0,
+        validate: bool = False
     ) -> float:
         """
         Calculate the Edit Distance with Real Penalty (ERP).
@@ -125,8 +130,11 @@ class EditDistance(BaseAlgorithm):
         :rtype: float
         """
         try:
-            validate_trajectory(r)
-            validate_trajectory(s)
+            if validate:
+                validate_trajectory(r)
+                validate_trajectory(s)
+            else:
+                warnings.warn("Args not validating", ResourceWarning)
 
             _r = [r_value for _tuple in r for r_value in _tuple]
             _s = [s_value for _tuple in s for s_value in _tuple]

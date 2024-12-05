@@ -31,7 +31,8 @@ class LCSS(BaseAlgorithm):
         self,
         r: list[tuple[float, float]],
         s: list[tuple[float, float]],
-        sigma: float = 1
+        sigma: float = 1,
+        validate: bool = False
     ) -> float:
         """
         Calculate the LCSS distance between two trajectories.
@@ -50,8 +51,11 @@ class LCSS(BaseAlgorithm):
         :rtype: float
         """
         try:
-            validate_trajectory(r)
-            validate_trajectory(s)
+            if validate:
+                validate_trajectory(r)
+                validate_trajectory(s)
+            else:
+                warnings.warn("Args not validating", ResourceWarning)
 
             _r = [r_value for _tuple in r for r_value in _tuple]
             _s = [s_value for _tuple in s for s_value in _tuple]

@@ -10,6 +10,7 @@ import stmeasures.calculate.frechet as _scfr
 import stmeasures.calculate.hausdorff as _scha
 import stmeasures.calculate.editdistance as _sced
 import stmeasures.calculate.euclidean as _sceu
+import stmeasures.calculate.sad as _scsa
 from stmeasures._algorithms import Algorithms
 
 _rdp = _scrd.RDP()
@@ -19,6 +20,7 @@ _frechet = _scfr.Frechet()
 _hausdorff = _scha.Hausdorff()
 _editdistance = _sced.EditDistance()
 _euclidean = _sceu.Euclidean()
+_spad = _scsa.SAD()
 
 def simplify(trajectory, tolerance):
     """
@@ -38,7 +40,7 @@ def simplify(trajectory, tolerance):
     """
     return _rdp.simplify(trajectory, tolerance)
 
-def distance(a, b, algorithm=Algorithms.EUCLIDEAN):
+def distance(a, b, algorithm=Algorithms.HAUSDORFF, *args):
     """
     Compute multiple distance metrics between trajectories.
 
@@ -56,21 +58,35 @@ def distance(a, b, algorithm=Algorithms.EUCLIDEAN):
         minimum distance if True.
     """
     if algorithm == Algorithms.EUCLIDEAN:
-        return _euclidean.distance(a, b)
+        return _euclidean.distance(a, b, *args)
     elif algorithm == Algorithms.DTW:
-        return _dtw.distance(a, b)
+        return _dtw.distance(a, b, *args)
     elif algorithm == Algorithms.LCSS:
-        return _lcss.distance(a, b)
+        return _lcss.distance(a, b, *args)
     elif algorithm == Algorithms.FRECHET:
-        return _frechet.distance(a, b)
+        return _frechet.distance(a, b, *args)
     elif algorithm == Algorithms.HAUSDORFF:
-        return _hausdorff.distance(a, b)
+        return _hausdorff.distance(a, b, *args)
     elif algorithm == Algorithms.ERS:
-        return _editdistance.ers(a, b)
+        return _editdistance.ers(a, b, *args)
     elif algorithm == Algorithms.ERP:
-        return _editdistance.erp(a, b)
+        return _editdistance.erp(a, b, *args)
+    elif algorithm == Algorithms.SPAD:
+        return _spad.distance(a, b, *args)
 
     return ValueError(f"Algorithm {algorithm} not supported.")
+
+def euclidean_distance(a, b, *args):
+    return distance(a, b, Algorithms.EUCLIDEAN, *args)
+
+def hausdorff_distance(a, b, *args):
+    return distance(a, b, Algorithms.HAUSDORFF, *args)
+
+def frechet_distance(a, b, *args):
+    return distance(a, b, Algorithms.FRECHET, *args)
+
+def spatialassem_distance(a, b, *args):
+    return distance(a, b, Algorithms.SPAD, *args)
 
 def distance_spatial(
         a: list[tuple[float, float]],
