@@ -10,6 +10,7 @@ import stmeasures.calculate.frechet as _scfr
 import stmeasures.calculate.hausdorff as _scha
 import stmeasures.calculate.editdistance as _sced
 import stmeasures.calculate.euclidean as _sceu
+import stmeasures.calculate.sad as _scsa
 from stmeasures._algorithms import Algorithms
 
 _rdp = _scrd.RDP()
@@ -19,6 +20,7 @@ _frechet = _scfr.Frechet()
 _hausdorff = _scha.Hausdorff()
 _editdistance = _sced.EditDistance()
 _euclidean = _sceu.Euclidean()
+_spad = _scsa.SAD()
 
 def simplify(trajectory, tolerance):
     """
@@ -69,6 +71,8 @@ def distance(a, b, algorithm=Algorithms.HAUSDORFF, *args):
         return _editdistance.ers(a, b, *args)
     elif algorithm == Algorithms.ERP:
         return _editdistance.erp(a, b, *args)
+    elif algorithm == Algorithms.SPAD:
+        return _spad.distance(a, b, *args)
 
     return ValueError(f"Algorithm {algorithm} not supported.")
 
@@ -80,6 +84,9 @@ def hausdorff_distance(a, b, *args):
 
 def frechet_distance(a, b, *args):
     return distance(a, b, Algorithms.FRECHET, *args)
+
+def spatialassem_distance(a, b, *args):
+    return distance(a, b, Algorithms.SPAD, *args)
 
 def distance_spatial(
         a: list[tuple[float, float]],
