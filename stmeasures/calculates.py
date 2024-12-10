@@ -40,7 +40,7 @@ def simplify(trajectory, tolerance):
     """
     return _rdp.simplify(trajectory, tolerance)
 
-def distance(a, b, algorithm=Algorithms.HAUSDORFF, *args):
+def distance(a, b, algorithm=Algorithms.SPAD, *args):
     """
     Compute multiple distance metrics between trajectories.
 
