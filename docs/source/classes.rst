@@ -1,6 +1,8 @@
 Classes
 =======
 
+Below find all the documentation provided for the algorithms implemented and important objects abstractions used in this package.
+
 Calculate Modules
 -----------------
 
@@ -22,7 +24,7 @@ Calculate Modules
 
 .. autoclass:: calculate.manhattan::Manhattan
 
-TODO: SAD y AMSS?
+.. autoclass:: calculate.sad::SAD
 
 Objects
 -------
@@ -30,3 +32,5 @@ Objects
 .. autoclass:: objects.cstructures::Point
 
 .. autoclass:: objects.cstructures::Trajectory
+
+.. autoclass:: objects.geojson::GeoJSON

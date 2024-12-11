@@ -1,4 +1,4 @@
 Read API
 ========
 
-TODO
+.. autofunction:: read.read_file

@@ -73,7 +73,7 @@ def distance(a, b, algorithm=Algorithms.SPAD, *args):
         - `Algorithms.ERS`: Edit Distance on Real Sequences (ERS).
         - `Algorithms.ERP`: Edit Distance with Real Penalty (ERP).
         - `Algorithms.SPAD`: Spatial Aspects Distance (SPAD).
-    *args : optional
+    `*args` : optional
         Additional arguments specific to the selected algorithm.
 
     Returns
@@ -241,8 +241,7 @@ def lcss_distance(a, b, sigma=1.0):
     Notes
     -----
     - Effective for scenarios with noisy or incomplete data, such as GPS tracking.
-    - Robust to outliers, as it focuses on subsequences rather than point-by-
-    point comparison.
+    - Robust to outliers, as it focuses on subsequences rather than point-by-point comparison.
 
     Examples
     --------
@@ -277,8 +276,7 @@ def spatial_assembling_distance(a, b, epsilon=1.0):
     Notes
     -----
     - Useful for comparing irregular or complex trajectory shapes.
-    - Balances global and local trajectory characteristics through its segment-
-    based approach.
+    - Balances global and local trajectory characteristics through its segment-based approach.
 
     Examples
     --------
