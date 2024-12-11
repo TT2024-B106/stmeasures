@@ -1,7 +1,7 @@
 """RDP algorithm class."""
 
 import ctypes
-import warnings
+# import warnings
 
 # from stmeasures.validation import validate_rdp
 from stmeasures.calculate.base import BaseAlgorithm
@@ -28,7 +28,7 @@ class RDP(BaseAlgorithm):
         Returns:
             list[tuple[float, float]]: The simplified sequence of coordinates.
         """
-        warnings.warn('Args not validating')
+        # warnings.warn('Args not validating')
 
         seq_points = (Point * len(sequence))(*[Point(lat, lon) for lat, lon in sequence])
 
