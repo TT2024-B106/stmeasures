@@ -3,7 +3,7 @@
 ======================================================
 
 `GitHub <https://github.com/TT2024-B106/stmeasures>`_
-| `PyPI <https://test.pypi.org/project/stmeasures/>`_
+| `PyPI <https://pypi.org/project/stmeasures/>`_
 | `Documentation <http://stmeasures.readthedocs.io/>`_
 
 `stmeasures` is a Python library designed to help researchers, data scientists, and GIS professionals analyze and compare trajectories efficiently. It provides a variety of algorithms for measuring trajectory similarity, supporting applications in clustering, pattern discovery, and outlier detection.
