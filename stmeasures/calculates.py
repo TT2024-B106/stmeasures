@@ -102,9 +102,9 @@ def distance(a, b, algorithm=Algorithms.SPAD, *args):
     elif algorithm == Algorithms.LCSS:
         return _lcss.distance(a, b, *args)
     elif algorithm == Algorithms.FRECHET:
-        return shapely.frechet_distance(*_to_s(a, b))
+        return float(shapely.frechet_distance(*_to_s(a, b)))
     elif algorithm == Algorithms.HAUSDORFF:
-        return shapely.hausdorff_distance(*_to_s(a, b))
+        return float(shapely.hausdorff_distance(*_to_s(a, b)))
     elif algorithm == Algorithms.ERS:
         return _editdistance.ers(a, b, *args)
     elif algorithm == Algorithms.ERP:
