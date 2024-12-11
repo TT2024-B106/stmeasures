@@ -11,8 +11,8 @@ copyright = '2024, TT2024-B106'
 author = 'TT2024-B106'
 
 # TODO: versioningit?
-release = '0.1'
-version = '0.1.0'
+release = '0.0.1'
+version = '0.0.1'
 
 extensions = [
     'sphinx.ext.duration',
