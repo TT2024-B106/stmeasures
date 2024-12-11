@@ -27,7 +27,6 @@ def _random_color() -> str:
     :return: A string representing a random color in the format `#RRGGBB`.
     :rtype: str
     """
-    import random
     return "#{:06x}".format(random.randint(0, 0xFFFFFF))
 
 def geojsonio_contents(**kwargs) -> str:

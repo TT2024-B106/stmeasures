@@ -5,7 +5,7 @@ import warnings
 
 from stmeasures.validation import validate_lcss, validate_trajectory
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
+# from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
 
 class LCSS(BaseAlgorithm):
     """

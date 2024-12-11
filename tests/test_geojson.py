@@ -1,4 +1,3 @@
-import json
 from pytest import fixture
 from stmeasures.objects.geojson import GeoJSON
 
@@ -16,6 +15,6 @@ def test_intialized(geojson):
     assert geojson.trajectories_list is not None
 
 def test_trajectories(geojson):
-    assert type(geojson[0]) == list
-    assert type(geojson[0][0]) == tuple
-    assert type(geojson[0][0][0]) == float
+    assert type(geojson[0]) is list
+    assert type(geojson[0][0]) is tuple
+    assert type(geojson[0][0][0]) is float
