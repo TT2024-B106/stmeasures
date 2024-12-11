@@ -1,7 +1,5 @@
 """Calculate module for various distance algorithms."""
 
-import shapely
-
 import stmeasures.calculate.rdp as _scrd
 import stmeasures.calculate.dtw as _scdt
 import stmeasures.calculate.lcss as _sclc
@@ -20,15 +18,6 @@ _hausdorff = _scha.Hausdorff()
 _editdistance = _sced.EditDistance()
 _euclidean = _sceu.Euclidean()
 _spad = _scsa.SAD()
-
-def _l(coords):
-    return '{"type": "LineString", "coordinates":' + str(coords) + '}'
-
-def _to_s(a, b):
-    l1 = shapely.from_geojson(_l([[lat, lon] for lat, lon in a]))
-    l2 = shapely.from_geojson(_l([[lat, lon] for lat, lon in b]))
-    
-    return l1, l2
 
 def simplify(trajectory, tolerance):
     """
@@ -102,9 +91,9 @@ def distance(a, b, algorithm=Algorithms.SPAD, *args):
     elif algorithm == Algorithms.LCSS:
         return _lcss.distance(a, b, *args)
     elif algorithm == Algorithms.FRECHET:
-        return float(shapely.frechet_distance(*_to_s(a, b)))
+        return _frechet.distance(a, b)
     elif algorithm == Algorithms.HAUSDORFF:
-        return float(shapely.hausdorff_distance(*_to_s(a, b)))
+        return _hausdorff.distance(a, b)
     elif algorithm == Algorithms.ERS:
         return _editdistance.ers(a, b, *args)
     elif algorithm == Algorithms.ERP:
