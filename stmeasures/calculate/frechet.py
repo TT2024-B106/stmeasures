@@ -1,7 +1,7 @@
 """Frechet algorithm class."""
 
 import ctypes
-import warnings
+# import warnings
 
 # from stmeasures.validation import validate_frechet, validate_trajectory # TODO
 from stmeasures.calculate.base import BaseAlgorithm
@@ -49,8 +49,8 @@ class Frechet(BaseAlgorithm):
         q : list[float]
             A second vector in n-space
         """
-        warnings.warn('Method not using cstructures', DeprecationWarning)
-        warnings.warn('Args not validating')
+        # warnings.warn('Method not using cstructures', DeprecationWarning)
+        # warnings.warn('Args not validating')
 
         len_p = len(p)
         len_q = len(q)
