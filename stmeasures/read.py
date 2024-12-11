@@ -1,5 +1,7 @@
 """Read module."""
 
+__all__ = ['read_file']
+
 import json
 from stmeasures.objects.geojson import GeoJSON
 

@@ -3,9 +3,9 @@
 import ctypes
 import warnings
 
-from stmeasures.validation import validate_frechet, validate_trajectory # TODO
+# from stmeasures.validation import validate_frechet, validate_trajectory # TODO
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
+# from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
 
 class Frechet(BaseAlgorithm):
     """A Frechet instance that computes the Frechet distance

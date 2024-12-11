@@ -5,7 +5,7 @@ import warnings
 
 from stmeasures.validation import validate_euclidean, validate_trajectory
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
+# from stmeasures.objects.cstructures import Trajectory, Point # TODO: Implement
 
 class Euclidean(BaseAlgorithm):
     """
@@ -38,7 +38,8 @@ class Euclidean(BaseAlgorithm):
     def distance(
             self,
             p: list[tuple[float, float]],
-            q: list[tuple[float, float]]
+            q: list[tuple[float, float]],
+            validate: bool = False
         ) -> float:
         """
         Calculates the Euclidean distance between two trajectories.
@@ -71,8 +72,11 @@ class Euclidean(BaseAlgorithm):
             2.8284271247461903
         """
         try:
-            validate_trajectory(p)
-            validate_trajectory(q)
+            if validate:
+                validate_trajectory(p)
+                validate_trajectory(q)
+            else:
+                warnings.warn("Args not validating", ResourceWarning)
 
             _p = [p_value for _tuple in p for p_value in _tuple]
             _q = [q_value for _tuple in q for q_value in _tuple]

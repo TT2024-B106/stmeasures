@@ -42,6 +42,9 @@ class GeoJSON:
     def __getitem__(self, index):
         return self.trajectories_list[index]
 
+    def __len__(self):
+        return len(self.trajectories_list)
+
     def _extract_trajectories(self):
         """
         Extracts trajectories from the raw GeoJSON data.
@@ -66,38 +69,3 @@ class GeoJSON:
                         'coordinates': coordinates
                     })
         return trajectories
-
-    # TODO: Add algorithms to work with
-    # def find_similar(self, trajectory, trajectories):
-    #     """
-    #     Finds the top 5 trajectories similar to a given trajectory using Euclidean distance.
-
-    #     This method compares the specified trajectory to each trajectory in the provided 
-    #     list of trajectories and returns the top 5 most similar ones, based on the 
-    #     Euclidean distance between their coordinates.
-
-    #     :param trajectory: The trajectory to compare.
-    #     :type trajectory: dict
-    #     :param trajectories: List of trajectories to compare against.
-    #     :type trajectories: list of dicts
-    #     :return: List of top 5 most similar trajectories, sorted by their Euclidean 
-    #              distance to the input trajectory.
-    #     :rtype: list of dicts
-    #     """
-    #     similar_trajectories = []
-
-    #     # Iterate over each trajectory in the list
-    #     for traj in trajectories:
-    #         # Calculate Euclidean distance between `trajectory` and `traj`
-    #         distance = euclidean.Euclidean.distance(trajectory.coordinates, traj.coordinates)
-
-    #         # Append each trajectory with its distance
-    #         similar_trajectories.append((distance, traj))
-
-    #     # Sort by distance in ascending order
-    #     similar_trajectories.sort(key=lambda x: x[0])
-
-    #     # Select the top 5 closest trajectories
-    #     top_5_similar = similar_trajectories[:5]
-
-    #     # Return only the trajec

@@ -27,7 +27,6 @@ def _random_color() -> str:
     :return: A string representing a random color in the format `#RRGGBB`.
     :rtype: str
     """
-    import random
     return "#{:06x}".format(random.randint(0, 0xFFFFFF))
 
 def geojsonio_contents(**kwargs) -> str:
@@ -41,6 +40,8 @@ def geojsonio_contents(**kwargs) -> str:
           
         - `trajectory` (list): A single trajectory, represented as a list of coordinates 
           (each coordinate is a tuple of two floats).
+
+        - `swapcoords` (bool): A flag to swap latitudes with longitudes.
     
     :type kwargs: dict
     :return: A GeoJSON string formatted as either a FeatureCollection (for multiple trajectories) 
@@ -79,6 +80,7 @@ def geojsonio_contents(**kwargs) -> str:
         raise ValueError("No argument provided")
 
     trajectories = kwargs.get("trajectories") or [kwargs.get("trajectory") or None]
+    swapcoords = kwargs.get("swapcoords") or True
 
     if isinstance(trajectories, list) and isinstance(trajectories[0], list):
         dt = [-1 for _ in trajectories]
@@ -92,7 +94,8 @@ def geojsonio_contents(**kwargs) -> str:
                     "type": "Feature",
                     "geometry": {
                         "type": "LineString",
-                        "coordinates": _swap_coordinates(trajectories[i])
+                        "coordinates": _swap_coordinates(trajectories[i])\
+                        if swapcoords else trajectories[i]
                     },
                     "properties": {
                         "index": indexes[i],
@@ -107,7 +110,7 @@ def geojsonio_contents(**kwargs) -> str:
 
     raise ValueError("No valid argument provided")
 
-def get_geojsonio_trajectory(trajectory_data):
+def get_geojsonio_trajectory(trajectory_data, swapcoords=True):
     """
     Convert a single trajectory to a GeoJSON LineString format.
 
@@ -122,9 +125,13 @@ def get_geojsonio_trajectory(trajectory_data):
     """
     _warn("Use get_geojsonio_contents instead.")
 
+    coords = trajectory_data['coordinates']
+    if swapcoords:
+        coords = _swap_coordinates(coords)
+
     geojson = {
         "type": "LineString",
-        "coordinates": _swap_coordinates(trajectory_data['coordinates'])
+        "coordinates": coords
     }
     return geojson
 

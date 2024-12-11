@@ -1,11 +1,10 @@
 """SAD algorithm class."""
 
 import ctypes
-import warnings
 
 from stmeasures.validation import validate_trajectory
 from stmeasures.calculate.base import BaseAlgorithm
-from stmeasures.objects.cstructures import Trajectory, Point
+from stmeasures.objects.cstructures import Trajectory
 
 class SAD(BaseAlgorithm):
     """

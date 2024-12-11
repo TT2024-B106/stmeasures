@@ -3,7 +3,7 @@
 import ctypes
 import warnings
 
-from stmeasures.validation import validate_dtw
+# from stmeasures.validation import validate_dtw
 from stmeasures.calculate.base import BaseAlgorithm
 from stmeasures.objects.cstructures import Trajectory, Point
 
